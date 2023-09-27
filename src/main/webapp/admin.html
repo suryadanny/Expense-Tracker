@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Set the page to the width of the device and set the zoon level -->
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<title>Administrator Portal</title>
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css "
+	href='https://fonts.googleapis.com/css?family=Open sans'>
+
+<link rel="stylesheet" href="/visitor_api/style.css" type="text/css ">
+
+<style>
+body {
+	height: 100%;
+	widht: 100%
+}
+
+.navbar {
+	min-height: 20px !important;
+	background-color: #000000;
+	padding: 1% 0;
+	font-size: 1.2em;
+}
+
+.navbar-brand {
+	padding: 0 5px 5px;
+}
+
+#home {
+	background:
+		url("C:/soft/eclipse/eclipse/workspace/visitor_api/src/main/webapp/mastercard1.jpg");
+	background-repeat: no-repeat;
+	padding: 100px 0 0;
+	display: table;
+	height: 100%;
+	position: relative;
+	width: 100%;
+	background-size: cover;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+}
+th {
+    background-color: #2E77BB;
+    color: white;
+    font-style: bold;
+    font-size: 20px;
+}
+
+.landing-text h1 {
+	vertical-align: middle;
+	text-align: center;
+	padding: 150px 0 0;
+}
+
+#formtype {
+	padding: 50px 0 0;
+}
+
+#visit {
+	padding: 10px 0 0;
+}
+</style>
+
+
+<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js" integrity="sha256-uEFhyfv3UgzRTnAZ+SEgvYepKKB0FW6RqZLrqfyUNug=" crossorigin="anonymous"></script>	
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min"></script>
+
+
+	<script> 
+
+	var username = null;
+	var password = $.cookie('password'); 
+	username = $.cookie('username');
+	if(username == null){
+	window.location.replace('http://localhost:8888/visitor_api/Login.html');
+	}
+	
+	
+	</script>
+
+</head>
+
+<body>
+
+
+
+    
+ 
+
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#navbar-collapse-main">
+					<span class="sr-only">Toggle navigation </span> <span
+						class=" icon-bar"></span>
+
+				</button>
+				<a class="navbar-brand"
+					href="http://localhost:8888/visitor_api/visitorRegister.html"><img
+					src="C:\soft\eclipse\eclipse\workspace\visitor_api\src\main\webapp\mastercard2.jpg"
+					width="65" height="45"> </a>
+				<div class="collapse navbar-collapse" id="navbar-collapse-main">
+					<ul class="nav navbar-nav navbar-right">
+
+						<li id ="logout"><a>Logout</a></li>
+					</ul>
+				</div>
+
+
+
+			</div>
+
+
+		</div>
+
+
+	</nav>
+
+
+	<div class="landing-text">
+		<h1>Administrator Login</h1>
+
+	</div>
+	<div class="container fluid" id="formtype">
+
+
+
+		<div class="row">
+
+			<div class="col-md-4 col-sm-4 col-xs-12"></div>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+
+				<form>
+
+					
+					<div class="form-group">
+						<label for="Query">Query Name</label> <input type="text"
+							class="form-control" id="Query" placeholder="Name">
+					</div>
+
+					<div class="form-group">
+						<label for="st">Start date</label> <input type="text"
+							class="form-control" id="st"
+							placeholder="Enter the start date yyyy-mm-dd">
+					</div>
+
+					<div class="form-group">
+						<label for="end">End date</label> <input type="text"
+							class="form-control" id="end"
+							placeholder="Enter the end date yyyy-mm-dd">
+					</div>
+
+
+
+					<input id="btn" type="button" class="btn btn-primary"
+						value="Submit" /> <input id="btnClear" type="button"
+						class="btn btn-primary pull-right" value="Clear" />
+				</form>
+                 <h5 id ="sd" align ="left"> </h5>
+				
+
+			</div>
+
+
+			<div class="col-md-4 col-sm-4 col-xs-12"></div>
+		</div>
+		
+		
+		<div class= "row">
+		       
+		      <div class="col-md-1 col-sm-1 col-xs-3"></div>
+		      
+		      <div class="col-md-10 col-sm-10 col-xs-30">
+		      
+		      
+		        <h2 align="center" id ="query"> </h2>
+				<div id="tableDiv" style="margin-top: 40px">
+                    
+                  
+                </div>
+		      
+      
+		      </div>
+		      
+		      <div class="col-md-1 col-sm-1 col-xs-3"></div>
+		
+		</div>
+
+	</div>
+
+
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js" integrity="sha256-uEFhyfv3UgzRTnAZ+SEgvYepKKB0FW6RqZLrqfyUNug=" crossorigin="anonymous"></script>	
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min"></script>
+
+
+	<script> 
+
+	
+	
+	
+$(document).ready(function () {
+	
+	var ul = $('#tableDiv');
+	var tag = $('#query');
+	var sd= $('#sd');
+	
+	 $('#btn').click(function(){
+       
+     //   var username = $('#usern').val();
+      //   var password = $('#passwd').val();
+         var name1 =$('#Query').val();
+         var startd =$('#st').val();        
+         var endd =$('#end').val() ;
+          if(  name1 == "")
+            {  var casetype=2;}
+      
+          if( startd == "")
+         {  var casetype =1;}
+      
+          if(name1 !== "" && startd !== "")
+         	var casetype=3;
+          // btoa() method encodes a string to Base64
+         var Aut = window.btoa(username + ':' + password);
+         
+      
+        switch(casetype) {
+          case 1:  
+            url1 = "http://localhost:8888/visitor_api/webapi/admin?name="+name1+"&casetype="+casetype;
+           break; 
+          case 2:
+            url1 = "http://localhost:8888/visitor_api/webapi/admin?start="+startd+"&end="+endd+"&casetype="+casetype;
+           break;
+          
+          case 3:
+        	  url1=  "http://localhost:8888/visitor_api/webapi/admin?name="+name1+"&start="+startd+"&end="+endd+"&casetype="+casetype;
+           
+          default:
+
+           }
+       
+        $.ajax({
+            type: 'GET',
+            
+            url: url1,
+            dataType: 'json',
+            // Specify the authentication header
+
+            headers: {
+                'Authorization': Aut
+            },
+            success: function (data) {
+                ul.empty();
+                tag.empty();
+                sd.empty();
+                
+                var table_body = '<table border="1" id="example" align ="center"><thead><tr><th>Name</th><th>Organisation</th><th>Id Type</th><th>Id Number</th><th>Contact number</th><th>Entry Time</th></tr></thead><tbody>';
+                tag.append('Query Details');
+                
+              $.each(data,function(index,val){  
+                
+                	table_body += '<tr>' ;
+                	
+                	table_body +='<td>';
+                	table_body += val.name ;
+                	table_body += '</td>';
+                	
+                	table_body +='<td>';
+                	table_body += val.organisation ;
+                	table_body += '</td>';
+                	
+                	table_body +='<td>';
+                	table_body += val.idtype ;
+                	table_body += '</td>';
+                	
+                	table_body +='<td>';
+                	table_body += val.id_number ;
+                	table_body += '</td>';
+                	
+                	table_body +='<td>';
+                	table_body += val.contact ;
+                	table_body += '</td>';
+                	
+                	table_body +='<td>';
+                	table_body += val.entry_time ;
+                	table_body += '</td>';
+                	
+                	
+                	table_body += '</tr>'
+                	
+                	
+                
+                
+              }); 
+              
+              
+              table_body+='</tbody></table>';
+              $('#tableDiv').html(table_body);
+            },
+            complete: function (jqXHR) {
+                if (jqXHR.status == '401') {
+                	ul.empty();
+                	tag.empty();
+                    sd.empty();
+                    sd.append('<li style="color:red">'
+                        + jqXHR.status + ' : ' + jqXHR.statusText + '- incorrect credentials'+ '</li>')
+                }
+            }
+        });
+        
+       
+      
+	});
+	 
+	 
+	 
+	 $('#btnClear').click(function () {
+         ul.empty();
+         tag.empty();
+     });
+	 
+	 $('#logout').click(function(){
+		
+		 $.removeCookie('username');
+		 $.removeCookie('password');
+		 
+		 window.location.replace('http://localhost:8888/visitor_api/visitorRegister.html');
+		 
+		 
+	 });
+});
+    	
+
+    
+    
+    
+    
+</script>
+
+
+
+
+</body>
+</html>

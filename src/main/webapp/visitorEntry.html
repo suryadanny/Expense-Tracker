@@ -1,0 +1,200 @@
+
+<html>
+<head>
+<meta charset="UTF-8">
+ 
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+ 
+<!-- Set the page to the width of the device and set the zoon level -->
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<title>Visitor Form Registration</title>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+
+<link rel="stylesheet" href="style.css" type = "text/css ">
+
+<style>
+
+body{
+	height:100%;
+	widht:100%
+	
+}
+
+.navbar{
+    min-height:20px !important  ;
+	background-color : #000000;
+	padding: 1% 0;
+	font-size: 1.2em;
+}
+
+.navbar-brand{
+     
+     padding: 0 5px 5px ;
+
+}
+#home{
+  background: url("C:/soft/eclipse/eclipse/workspace/visitor_api/src/main/webapp/mastercard1.jpg");
+  background-repeat: no-repeat ;
+  padding: 100px 0 0;
+  display: table;
+  height:100%;
+  position: relative;
+  width:100%;
+  background-size:cover;
+}
+
+
+
+.landing-text h1{
+       vertical-align: middle;
+     text-align: center;
+       padding:  150px 0 0;
+
+}
+ 
+#formtype{
+   padding: 50px 0 0;
+}
+
+#visit{
+  padding: 10px 0 0;
+}
+
+</style>
+
+
+</head>
+
+<body>
+
+
+<nav class = "navbar navbar-default navbar-fixed-top" role ="navigation">
+    <div class="container">
+        <div class="navbar-header">
+           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+               <span class ="sr-only">Toggle navigation </span>
+               <span class =" icon-bar"></span>
+               
+           </button>    
+           <a class="navbar-brand" href="http://localhost:8888/visitor_api/visitorRegister.html"><img src="C:\soft\eclipse\eclipse\workspace\visitor_api\src\main\webapp\mastercard2.jpg" width = "65" height ="45" >
+           </a>
+           
+           
+        
+        </div>
+    
+    
+    </div>
+
+
+</nav>
+
+
+<div class="landing-text">
+      <h1>Registration Form</h1>
+ 
+ </div>
+<div class="container fluid" id ="formtype">
+
+
+ 
+ <div  class ="row">
+ 
+    <div class = "col-md-4 col-sm-4 col-xs-12"></div> 
+    
+    
+    <div class="col-md-4 col-sm-4 col-xs-12">
+    
+  <form id="add">
+    
+    
+    <div class="form-group">  
+    <label for="name">Visitor Name</label>
+    <input type="text" class="form-control" id="name"  placeholder="Enter Name"> 
+    </div>
+  
+    <div class="form-group">  
+    <label for="organisation">Organization</label>
+    <input type="text" class="form-control" id="organisation"  placeholder="Enter Organisation Name">
+    </div>
+ 
+  
+    <div class="form-group">  
+    <label for="idtype">Form of ID</label>
+    <input type="text" class="form-control" id="idtype"  placeholder="Enter Id Type">   
+    </div>
+    
+    <div class="form-group">
+    <label for="id_number">ID Details</label>
+    <input type="text" class="form-control" id="id_number" aria-describedby="idnHelp" placeholder="Enter Id number">
+    <small id="idnHelp" class="form-text text-muted">Enter your unique identification number.</small>
+    </div>
+ 
+    <div class="form-group">
+    <label for="contact">Contact Details</label>
+    <input type="text" class="form-control" id="contact" placeholder="Contact Details">
+    </div>
+  
+    <input type="submit" class="btn btn-primary">
+  </form>
+     
+  </div>
+    
+    <div class = "col-md-4 col-sm-4 col-xs-12"></div> 
+    
+ </div>
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min"></script>-->
+
+<script>
+
+$(function(){
+	
+		
+	
+	
+	$('#add').on('submit',function(){
+		//alert("Hello");
+		var $items = $('#name, #organisation,#idtype,#id_number,#contact')
+        var obj = {}
+         $items.each(function() {
+             obj[this.id] = $(this).val();
+        })
+
+         var json= JSON.stringify(obj);
+		 
+		
+		
+		$.ajax({
+            url: "webapi/visitor",
+            dataType: 'text',
+            type: 'POST',
+            contentType: "application/json",
+            data:json,
+    			
+    			
+            success: function( ){
+                alert("this is done");
+            },
+            error: function( ){
+                alert("effort down the drain");
+            }
+        });
+		
+		
+		
+		
+	});
+	
+	
+	
+});
+</script>
+</body>
+</html>
