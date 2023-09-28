@@ -68,7 +68,7 @@ public class Auth extends HttpServlet {
        			 re.last();
        			 
        		 }
-       		 response.sendRedirect("http://localhost:8888/visitor_api/Login.html");
+       		 response.sendRedirect("http://localhost:8888/expense_api/Login.html");
        	 }
         }
         

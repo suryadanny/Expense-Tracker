@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -14,8 +16,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.expense.demo.expense_store.visit_store;
 import org.expense.demo.expense_store.visitor;
-@Path("admin")
-public class Administrator {
+@Path("expense/app")
+public class UserApp {
 	
 	visit_store d = new visit_store();
 	
@@ -40,6 +42,17 @@ public class Administrator {
     	
     	
     	}
+    }
+    
+    
+    @POST
+    @Path("/postExpense")
+    @Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.MULTIPART_FORM_DATA)
+    public String addExpense() {
+    	
+    	
+    	return null;
     }
 	
 
