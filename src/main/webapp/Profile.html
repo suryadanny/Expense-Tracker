@@ -6,8 +6,9 @@
     <title>User Profile</title>
     <link rel="stylesheet" href="Profile.css">
     <link rel="stylesheet" href="Navbar.css">
+
 </head>
-<body>
+<body onload="populateUserInfo()">
 <nav class="navbar">
     <div class="nav-tabs">
         <a href="#">Tab 1</a>
@@ -27,10 +28,11 @@
         <div class="profile-content">
             <img src="mastercard.png" alt="Profile Picture" class="profile-picture">
             <div class="profile-details">
-                <p><strong>Username:</strong> JohnDoe123</p>
-                <p><strong>Full Name:</strong> John Doe</p>
-                <p><strong>Phone Number:</strong> (123) 456-7890</p>
-                <p><strong>User ID:</strong> 12345</p>
+                <p><strong>Username: </strong><span id="userName"></span> </p>
+                <p><strong>Full Name: </strong><span id="fullName"></span></p>
+                <p><strong>Phone Number: </strong><span id="phoneNumber"></span></p>
+                <p><strong>User ID: </strong><span id="userID"></span></p>
+                <p><strong>Email ID: </strong><span id="emailID"></span></p>
             </div>
         </div>
         <div class="change-password">
@@ -45,10 +47,11 @@
                 <label for="confirmPassword">Confirm Password:</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
 
-                <button type="submit">Change Password</button>
+                <button type="submit" onclick="changePassword()">Change Password</button>
             </form>
         </div>
     </div>
 </div>
+<script src="functionality.js"></script>
 </body>
 </html>
