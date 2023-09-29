@@ -50,6 +50,9 @@ public class UserRepository {
 				user = new User();
 				user.setId(result.getInt("id"));
 				user.setPassword(result.getString("password"));
+				user.setEmail(result.getString("email"));
+				user.setUsername(username);
+				user.setMobile(result.getString("mobile"));
 			}
 		    stmt.close();
 		    

@@ -1,14 +1,14 @@
-CREATE TABLE USER (
+CREATE TABLE USERS (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) UNIQUE NOT NULL,
     name VARCHAR(255),
     email VARCHAR(255),
-    mobile VARCHAR(20)
+    mobile VARCHAR(20),
+	password VARCHAR(255)
 );
 
 CREATE TABLE credential (
     user_id INT PRIMARY KEY,
-    password VARCHAR(255) NOT NULL,
     OTP VARCHAR(6),
 	constraint fk_credential_1 foreign key(user_id) references USER(id)
 );
