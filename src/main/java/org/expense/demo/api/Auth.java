@@ -42,7 +42,7 @@ public class Auth extends HttpServlet {
         try {
        	 Class.forName("com.mysql.cj.jdbc.Driver");
        	 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebookshop?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC","E088679","Welcome@123");
-         String st = "select passwd from administrator where username = ?";
+         String st = "select passwd from user where username = ?";
          PreparedStatement stmt = conn.prepareStatement(st,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
         stmt.setString(1, username);	
          

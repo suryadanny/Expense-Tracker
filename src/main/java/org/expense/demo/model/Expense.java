@@ -1,5 +1,7 @@
 package org.expense.demo.model;
 
+import java.sql.Timestamp;
+
 import javax.xml.bind.annotation.XmlRootElement;
 //object model of the visitor 
 @XmlRootElement
@@ -12,10 +14,17 @@ public class Expense {
 	private String paymentMode;
 	private Double amount;
 	private String currency;
+	private Timestamp trans_dttm;
 	private Integer userId;
 	private Integer owedUserId;
 	private Integer groupId;
 	
+	public Timestamp getTrans_dttm() {
+		return trans_dttm;
+	}
+	public void setTrans_dttm(Timestamp trans_dttm) {
+		this.trans_dttm = trans_dttm;
+	}
 	public Integer getExpenseId() {
 		return expenseId;
 	}

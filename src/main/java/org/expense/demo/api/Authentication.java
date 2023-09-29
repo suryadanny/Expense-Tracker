@@ -43,15 +43,15 @@ public class Authentication implements ContainerRequestFilter{
 				
 				
 				StringTokenizer st = new StringTokenizer(au2, ":");
-				String username = st.nextToken();
+				String userId = st.nextToken();
 				String password =st.nextToken();
 				
 				try {
 			       	 Class.forName("com.mysql.cj.jdbc.Driver");
-			       	 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebookshop?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC","E088679","Welcome@123");
-			         String line = "select passwd from administrator where username = ?";
+			       	 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC","surya","lingam1998");
+			         String line = "select passwd from user where username = ?";
 			         PreparedStatement stmt = conn.prepareStatement(line,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-			        stmt.setString(1, username);	
+			        stmt.setString(1, userId);	
 			         
 			         
 			         ResultSet re = stmt.executeQuery();
