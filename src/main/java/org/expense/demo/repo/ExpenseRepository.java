@@ -15,22 +15,28 @@ public class ExpenseRepository {
 	public void addExpense(Expense expense) throws Exception {
 		try
 		{
-		    Class.forName("com.mysql.cj.jdbc.Driver");
-		    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebookshop","E088679","Welcome@123");
-		    String st = "insert into expense values(null,?,?,?,?,now(),?)";
-		    PreparedStatement stmt = conn.prepareStatement(st , ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-		    
-		    stmt.setString(1, expense.getTitle());
-		    stmt.setString(2, expense.getNote());
-		    stmt.setString(3,expense.getCategory());
-		    stmt.setDouble(4, expense.getAmount());
-		    stmt.setString(5, expense.getCurrency());
-		    stmt.setString(6, expense.getPaymentMode());
-		    stmt.setInt(7, expense.getUserId());
-		    stmt.setInt(8, expense.getOwedUserId());
-		    stmt.setInt(8, expense.getGroupId());
-		    stmt.executeUpdate();
-		    
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
+					"lingam1998");
+			String st = "insert into expenses"
+					+ " (title, notes,category, amount,currency,txn_dttm,payment_mode,user_id, owing_user_id,group_id)"
+					+ "values(?,?,?,?,?,?,?,?,?,?)";
+			PreparedStatement stmt = conn.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+
+			stmt.setString(1, expense.getTitle());
+			stmt.setString(2, expense.getNote());
+			stmt.setString(3, expense.getCategory());
+			stmt.setDouble(4, expense.getAmount());
+			stmt.setString(5, expense.getCurrency());
+			stmt.setTimestamp(6, expense.getTrans_dttm());
+			stmt.setString(7, expense.getPaymentMode());
+			stmt.setInt(8, expense.getUserId());
+			
+			stmt.setObject(9, expense.getOwedUserId());
+			stmt.setObject(10, expense.getGroupId());
+			stmt.executeUpdate();
+
 		}
 		catch(SQLException e)
 		{
@@ -53,13 +59,13 @@ public class ExpenseRepository {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
 					"lingam1998");
-			String sql = "select * from expense where user_id = ? ";
+			String sql = "select * from expenses where user_id = ? ";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
 			stmt.setInt(1, userId);
 			ResultSet result = stmt.executeQuery();
 			
-			while (result != null) {
+			while (result.next()) {
 				Expense expense = new Expense();
 				expense.setExpenseId(result.getInt("id"));
                 expense.setTitle(result.getString("title"));

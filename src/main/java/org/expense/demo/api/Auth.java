@@ -13,6 +13,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Response;
+
+import org.expense.demo.model.User;
+import org.expense.demo.repo.UserRepository;
 
 /**
  * Servlet implementation class Auth
@@ -23,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Auth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private UserRepository userRepo = new UserRepository();
     /**
      * Default constructor. 
      */
@@ -36,50 +41,31 @@ public class Auth extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-        String username = request.getParameter("usern");
-        String password = request.getParameter("passwd");
-        
-        try {
-       	 Class.forName("com.mysql.cj.jdbc.Driver");
-       	 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebookshop?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC","E088679","Welcome@123");
-         String st = "select passwd from user where username = ?";
-         PreparedStatement stmt = conn.prepareStatement(st,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-        stmt.setString(1, username);	
-         
-         
-         ResultSet re = stmt.executeQuery();
-         
-       	 if( re.next() && password.equals(re.getString("passwd")) )
-       	 {
-       		// chain.doFilter(request, response);
-       		 Cookie User = new Cookie("username",username);
-       		 Cookie pass = new Cookie("password",password);
-       		 User.setMaxAge(30);
-       		 pass.setMaxAge(30);
-       		 response.addCookie(User);
-       		 response.addCookie(pass);
-       		 response.sendRedirect("http://localhost:8888/visitor_api/admin.html");
-       		// out.println("loggedin");
-       	 }
-       	 else 
-       	 {
-       		 if(re!= null )
-       		 {
-       			 re.last();
-       			 
-       		 }
-       		 response.sendRedirect("http://localhost:8888/expense_api/Login.html");
-       	 }
-        }
-        
-        catch(ClassNotFoundException e)
-        {
-       	 e.printStackTrace();
-        }
-        catch(SQLException e1)
-        {
-       	 e1.printStackTrace();
-        }
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+
+		try {
+			System.out.println("here");
+			User user = userRepo.getUser(username);
+
+			if (user != null && password.equals(user.getPassword())) {
+				// chain.doFilter(request, response);
+				Cookie User = new Cookie("userId", String.valueOf(user.getId()));
+				Cookie pass = new Cookie("password", password);
+				User.setMaxAge(30);
+				pass.setMaxAge(30);
+				response.addCookie(User);
+				response.addCookie(pass);
+				response.sendRedirect("http://localhost:8888/visitor_api/admin.html");
+				// out.println("loggedin");
+			} else {
+				response.sendRedirect("http://localhost:8888/expense_api/Login.html");
+			}
+		} catch (Exception ex) {
+			System.out.println("Exception occurred while getting user :" + ex.getMessage());
+			ex.printStackTrace();
+			response.setStatus(500);
+		}
 	}
 
 	/**
