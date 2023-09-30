@@ -137,11 +137,19 @@ function populateUserExpenditure()
 
     var expenditureContent = "";
 
+    var currencySym =
+        {
+            "USD": "$"
+        };
+
+    var categoryCounter = {};
+    var pieChartData = [];
+
     for (var i=0; i<expenditure.length; i++)
     {
         var title = expenditure[i]["title"];
         var cost = expenditure[i]["cost"];
-        var currency = expenditure[i]["currency"];
+        var currency = currencySym[expenditure[i]["currency"]];
         var date = expenditure[i]["date"];
         var category = expenditure[i]["category"];
 
@@ -150,16 +158,55 @@ function populateUserExpenditure()
                 firstColOpenAndClose +
                 secondColOpen +
                     titleEntryDiv + title + closeDiv +
-                    costEntryDiv + cost + closeDiv +
+                    costEntryDiv + currency + cost + closeDiv +
                     dateEntryDiv + date + closeDiv +
                     categoryEntryDiv + category + closeDiv +
                 closeDiv +
             closeDiv;
 
         expenditureContent += newRow;
+        if (!Object.hasOwn(categoryCounter, category))
+        {
+            categoryCounter[category] = 0;
+        }
+        categoryCounter[category] += 1;
+    }
+
+    for (const [key, value] of Object.entries(categoryCounter)) {
+        pieChartData.push({
+            x: key,
+            value: value
+        });
     }
 
     document.getElementById("expenditureContent").innerHTML = expenditureContent;
+    generatePIchart(pieChartData);
+}
+
+function generatePIchart(data){
+    // data = [
+    //     {x: "White", value: 223553265},
+    //     {x: "Black or African American", value: 38929319},
+    //     {x: "American Indian and Alaska Native", value: 2932248},
+    //     {x: "Asian", value: 14674252},
+    //     {x: "Native Hawaiian and Other Pacific Islander", value: 540013},
+    //     {x: "Some Other Race", value: 19107368},
+    //     {x: "Two or More Races", value: 9009073}
+    // ];
+
+    // create the chart
+    var chart = anychart.pie();
+
+    // set the chart title
+    chart.title("Population by Race for the United States: 2010 Census");
+
+    // add the data
+    chart.data(data);
+
+    // display the chart in the container
+    chart.container('pieChart');
+    chart.draw();
+
 }
 
 // var x = loadJson("https://jsonware.com/json/abfe005c41c8214e22e487b8d6eff417.json")
