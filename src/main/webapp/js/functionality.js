@@ -92,7 +92,7 @@ function logout()
     deleteCookie("userId");
     deleteCookie("password");
     // navBarDisplay();
-    window.location.replace(baseURL + "/Login.html");
+    window.location.replace("http://localhost:8085/Expense-Management/Login.html");
 }
 
 

@@ -24,7 +24,7 @@ function register()
     if(response.responseText === "USER CREATED")
     {
         alert("Registration successful");
-        window.location.replace(baseURL + "/Login.html");
+        window.location.replace("http://localhost:8085/Expense-Management/Login.html");
     }
     else
         alert("Registration unsuccessful");

@@ -1,6 +1,7 @@
 package org.expense.demo.api;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.ws.soap.AddressingFeature.Responses;
+//import javax.xml.ws.soap.AddressingFeature.Responses;
 
 import org.expense.demo.model.Contact;
 import org.expense.demo.model.User;
@@ -85,6 +86,25 @@ public class UserApp {
 		}
 		return Response.ok(contactList).build();
 		
+	}
+
+	@Path("/userProfile")
+	@GET
+	public Response getUserProfile(@Context HttpHeaders headers) {
+		Map<String, String> userInfo = new HashMap<>();
+		try {
+			Map<String,String> map = Utility.resolveHeaders(headers.getHeaderString("Authorization"));
+			User user = userRepo.getUser(Integer.parseInt(map.get("userId")));
+			userInfo.put("userID", Integer.toString(user.getId()));
+			userInfo.put("userName", user.getUsername());
+			userInfo.put("fullName", user.getName());
+			userInfo.put("emailID", user.getEmail());
+			userInfo.put("phoneNumber", user.getMobile());
+		}
+		catch (Exception ex) {
+			return Response.serverError().entity(ex.getMessage()).build();
+		}
+		return Response.ok(userInfo).build();
 	}
 	
 }

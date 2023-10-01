@@ -58,8 +58,8 @@ function populateUserExpenditure()
         let cost = expenditure[i]["amount"];
         let currency = currencySym[expenditure[i]["currency"]];
         let date = expenditure[i]["date"];
-        // let category = expenditure[i]["category"];
-        let category = expenditure[i]["note"];
+        let category = expenditure[i]["category"];
+        let note = expenditure[i]["note"];
         let newRow =
             horizontal_bar_open +
             firstColOpenAndClose +
@@ -105,7 +105,7 @@ function generatePIchart(data){
     let chart = anychart.pie();
 
     // set the chart title
-    chart.title("Population by Race for the United States: 2010 Census");
+    chart.title("Expenditure Category");
 
     // add the data
     chart.data(data);
@@ -177,6 +177,12 @@ function submitExpense()
     }
 
     let payload = JSON.stringify(payloadJson);
-
-    sendInfo(url, payload, false);
+    if(getCookie("userAuth"))
+    {
+        sendInfo(url, payload, false);
+    }
+    else
+    {
+        alert("userAuth not set. Invalid login.");
+    }
 }

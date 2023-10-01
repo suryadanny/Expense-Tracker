@@ -1,15 +1,16 @@
-function populateUserInfo(url)
+function populateUserInfo()
 {
-    let x;// = loadJson(url) // send query to get user info
+    let url = "/app/user/userProfile";
+    let x = loadJson(url); // send query to get user info
 
     // Giving it dummy values for now
-    x = {
-        "userName": "SharmajiKiBete",
-        "fullName": "Beta Sharma",
-        "phoneNumber": "+11231237890",
-        "userID": "007",
-        "emailID": "sharmasbeta@example.com"
-    }
+    // x = {
+    //     "userName": "SharmajiKiBete",
+    //     "fullName": "Beta Sharma",
+    //     "phoneNumber": "+11231237890",
+    //     "userID": "007",
+    //     "emailID": "sharmasbeta@example.com"
+    // }
     let phoneNumber = x["phoneNumber"].replace("+1", "");
     phoneNumber = "(" + phoneNumber.substring(0,3) + ")" + phoneNumber.substring(3, 6) + "-" + phoneNumber.substring(6, 10);
 
