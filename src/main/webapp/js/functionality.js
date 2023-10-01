@@ -29,7 +29,7 @@ function loadJson(url)
 {
     let xhttp = new XMLHttpRequest();
     var jsonInfo;
-    xhttp.open("GET", url, false);
+    xhttp.open("GET", baseURL + url, false);
     // xhttp.setRequestHeader('Access-Control-Allow-Origin', '*');
     // xhttp.setRequestHeader('Access-Control-Allow-Credentials', 'true');
     // xhttp.setRequestHeader('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
@@ -61,11 +61,14 @@ function sendInfo(url, payLoad, return_obj)
     xhr.open("POST", baseURL + url, false);
     let auth = 'Basic ' + getCookie("userAuth");
     xhr.setRequestHeader('Authorization',  auth );
-    // xhr.setRequestHeader( 'Content-Type',   'application/json' );
+    xhr.setRequestHeader( 'Content-Type',   'application/json' );
     // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
     // xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     // xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, HEAD, OPTIONS")
-    xhr.send();
+    if (payLoad != null)
+    {xhr.send(payLoad);}
+    else
+    {xhr.send();}
 
     if (return_obj)
         return xhr;

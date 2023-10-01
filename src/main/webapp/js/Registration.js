@@ -7,18 +7,25 @@ function register()
     let regUserName = document.getElementById("username_reg").value;
 
     // send the info to endpoint
-    let payLoad = {
-        "name" : regFullName,
-        "username" : regUserName,
-        "password" : regPassword,
-        "email" : regEmail,
-        "mobile" : regPhoneNo
+    let payloadJson = {
+        name : regFullName,
+        username : regUserName,
+        password : regPassword,
+        email : regEmail,
+        mobile : regPhoneNo
     }
 
+    let payload = JSON.stringify(payloadJson);
     let url = "/app/user/register"
 
-    let response = sendInfo(url, payLoad, true);
+    let response = sendInfo(url, payload, true);
 
     // redirect to login page
-    let redirect; // placeholder
+    if(response.responseText === "USER CREATED")
+    {
+        alert("Registration successful");
+        window.location.replace(baseURL + "/Login.html");
+    }
+    else
+        alert("Registration unsuccessful");
 }

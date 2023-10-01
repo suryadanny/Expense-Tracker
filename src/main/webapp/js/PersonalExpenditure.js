@@ -1,6 +1,6 @@
 function populateUserExpenditure()
 {
-    let url = "http://localhost:8085/Expense-Management/app/expense/all";
+    let url = "/app/expense/all";
     let expenditure = loadJson(url) // send query to get user expenditure
 
     // Giving it dummy values for now
@@ -169,11 +169,11 @@ function submitExpense()
     let url = "/app/expense/postExpense"
 
     let payloadJson = {
-        "title": title,
-        "note": notes,
-        "category": category,
-        "amount": parseFloat(amount),
-        "currency": currency
+        title: title,
+        note: notes,
+        category: category,
+        amount: parseFloat(amount),
+        currency: currency
     }
 
     let payload = JSON.stringify(payloadJson);
