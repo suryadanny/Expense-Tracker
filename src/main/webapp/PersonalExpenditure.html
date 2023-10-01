@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-  <link rel="stylesheet" href="Expense.css">
-    <link rel="stylesheet" href="Container.css">
-    <link rel="stylesheet" href="Navbar.css">
+  <link rel="stylesheet" href="css/PersonalExpenditure.css">
+    <link rel="stylesheet" href="css/Container.css">
+    <link rel="stylesheet" href="css/Navbar.css">
 <!--    To generate PIChart-->
     <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"></script>
     <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"></script>
@@ -13,15 +13,22 @@
 <body onload="populateUserExpenditure()">
 
 <nav class="navbar">
-    <div class="nav-tabs">
-        <a href="#">Tab 1</a>
-        <a href="#">Tab 2</a>
-        <a href="#">Tab 3</a>
+    <div class="nav-tabs" id="nav-tabs-id">
+        <a href="http://localhost:8085/Expense-Management/PersonalExpenditure.html">Personal</a>
+        <a href="#">Friends</a>
+        <a href="#">Group</a>
     </div>
     <div class="profile-tab">
-        <a href="#">Profile</a>
+        <a href="http://localhost:8085/Expense-Management/Profile.html" id="profile-tab-id">Profile</a>
+        <a href="#" onclick="logout()" id="logout-tab-id">Logout</a>
+        <a href="http://localhost:8085/Expense-Management/Login.html" id="login-tab-id">Login</a>
     </div>
 </nav>
+
+<div id="addExpenseBtn">
+    <button onclick="addExpense()">Add Expense</button>
+</div>
+
 
 
 <div class="container" id="expenditureContent">
@@ -35,17 +42,10 @@
 <!--        </div>-->
 <!--    </div>-->
 
-<!--    <div class="horizontal-bar">-->
-<!--        <div class="col-5"></div>-->
-<!--        <div class="col-5">-->
-<!--            <div class="bar-title">Title: Grocery Shopping</div>-->
-<!--            <div class="bar-cost">Cost: $50</div>-->
-<!--            <div class="bar-date">Date: 2023-09-27</div>-->
-<!--            <div class="bar-category">Category: Food</div>-->
-<!--        </div>-->
-<!--    </div>-->
 </div>
 <div id="pieChart" style="width: 100%; height: 100%"></div>
-<script src="functionality.js"></script>
+<script src="js/functionality.js"></script>
+<script src="js/Navbar.js"></script>
+<script src="js/PersonalExpenditure.js"></script>
 </body>
 </html>

@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Page</title>
-    <link rel="stylesheet" href="Registration_css.css">
-    <link rel="stylesheet" href="Navbar.css">
+    <link rel="stylesheet" href="css/Registration.css">
+    <link rel="stylesheet" href="css/Navbar.css">
 </head>
 <body>
 <nav class="navbar">
-    <div class="nav-tabs">
-        <a href="#">Tab 1</a>
-        <a href="#">Tab 2</a>
-        <a href="#">Tab 3</a>
+    <div class="nav-tabs" id="nav-tabs-id">
+        <a href="http://localhost:8085/Expense-Management/PersonalExpenditure.html">Personal</a>
+        <a href="#">Friends</a>
+        <a href="#">Group</a>
     </div>
     <div class="profile-tab">
-        <a href="#">Profile</a>
+        <a href="http://localhost:8085/Expense-Management/Profile.html" id="profile-tab-id">Profile</a>
+        <a href="#" onclick="logout()" id="logout-tab-id">Logout</a>
+        <a href="http://localhost:8085/Expense-Management/Login.html" id="login-tab-id">Login</a>
     </div>
 </nav>
 
@@ -23,26 +25,29 @@
     <div class="registration-container">
         <h2>Register</h2>
         <form action="#" method="POST">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required><br><br>
+            <label for="username_reg">Username:</label>
+            <input type="text" id="username_reg" name="username_reg" required><br><br>
 
-            <label for="fullname">Full Name:</label>
-            <input type="text" id="fullname" name="fullname" required><br><br>
+            <label for="fullname_reg">Full Name:</label>
+            <input type="text" id="fullname_reg" name="fullname_reg" required><br><br>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required><br><br>
+            <label for="email_reg">Email:</label>
+            <input type="email" id="email_reg" name="email_reg" required><br><br>
 
-            <label for="phone">Phone Number:</label>
-            <input type="text" id="phone" name="phone" required><br><br>
+            <label for="phone_reg">Phone Number:</label>
+            <input type="text" id="phone_reg" name="phone_reg" required><br><br>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br><br>
+            <label for="password_reg">Password:</label>
+            <input type="password" id="password_reg" name="password_reg" required><br><br>
 
-            <button type="submit">Register</button>
+            <button type="submit" onclick="register()">Register</button>
         </form>
 
         <p>Already have an account? <a href="login.html">Login here</a>.</p>
     </div>
 </div>
+<script src="js/functionality.js"></script>
+<script src="js/Navbar.js"></script>
+<script src="js/Registration.js"></script>
 </body>
 </html>

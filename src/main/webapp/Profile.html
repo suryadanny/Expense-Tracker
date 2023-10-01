@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
-    <link rel="stylesheet" href="Profile.css">
-    <link rel="stylesheet" href="Navbar.css">
+    <link rel="stylesheet" href="css/Profile.css">
+    <link rel="stylesheet" href="css/Navbar.css">
 
 </head>
 <body onload="populateUserInfo()">
 <nav class="navbar">
-    <div class="nav-tabs">
-        <a href="#">Tab 1</a>
-        <a href="#">Tab 2</a>
-        <a href="#">Tab 3</a>
+    <div class="nav-tabs" id="nav-tabs-id">
+        <a href="http://localhost:8085/Expense-Management/PersonalExpenditure.html">Personal</a>
+        <a href="#">Friends</a>
+        <a href="#">Group</a>
     </div>
     <div class="profile-tab">
-        <a href="#">Profile</a>
+        <a href="http://localhost:8085/Expense-Management/Profile.html" id="profile-tab-id">Profile</a>
+        <a href="#" onclick="logout()" id="logout-tab-id">Logout</a>
+        <a href="http://localhost:8085/Expense-Management/Login.html" id="login-tab-id">Login</a>
     </div>
 </nav>
 
@@ -26,7 +28,7 @@
             <h2>User Profile</h2>
         </div>
         <div class="profile-content">
-            <img src="mastercard.png" alt="Profile Picture" class="profile-picture">
+            <img src="img/mastercard.png" alt="Profile Picture" class="profile-picture">
             <div class="profile-details">
                 <p><strong>Username: </strong><span id="userName"></span> </p>
                 <p><strong>Full Name: </strong><span id="fullName"></span></p>
@@ -52,6 +54,8 @@
         </div>
     </div>
 </div>
-<script src="functionality.js"></script>
+<script src="js/functionality.js"></script>
+<script src="js/Navbar.js"></script>
+<script src="js/Profile.js"></script>
 </body>
 </html>

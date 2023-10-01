@@ -1,0 +1,63 @@
+
+body {
+    background-color: rgba(32, 33, 35, 1);
+    font-family: Arial, sans-serif;
+}
+
+.horizontal-bar {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 10px;
+    color: white;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.horizontal-bar:nth-child(even) {
+    background-color: rgba(52,53,65, 800);
+}
+
+.horizontal-bar:nth-child(odd) {
+    background-color: rgba(32, 33, 35, 0.5);
+}
+
+.bar-item {
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 14px;
+}
+
+#OVER{
+    width:100%;
+    height:100%;
+    left:0;/*IE*/
+    top:0;
+    text-align:center;
+    z-index:5;
+    position:fixed;
+    background-color:rgba(52,53,65, 0.5);;
+}
+
+.overlay {
+    width:100%;
+    z-index:6;
+    left:0;/*IE*/
+    top:30%;
+    font-color:#cdcdcd;
+    color: white;
+    font-size:0.8em;
+    text-align:center;
+    position:fixed;
+    background-color: rgba(0, 4, 9, 0.77);
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(0, 4, 9, 0.77);
+    color: #fff;
+    border: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
