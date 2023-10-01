@@ -39,7 +39,7 @@ public class ExpenseApp {
      	 expenses =   expenseRepo.getAllExpenses(Integer.parseInt(map.get("userId")));
      	}catch (Exception ex) {
      		System.out.println("Exception occurred while getting all expenses :" + ex.getMessage());
-     		return Response.serverError().build();
+     		return Response.serverError().entity(ex.getMessage()).build();
      	}
      	return Response.ok(expenses).build();
     }
@@ -48,7 +48,7 @@ public class ExpenseApp {
     @POST
     @Path("/postExpense")
     @Consumes(MediaType.APPLICATION_JSON)
-	public Response.Status addExpense(@Context HttpHeaders headers, Expense expense) {
+	public Response addExpense(@Context HttpHeaders headers, Expense expense) {
     	try {
     		Map<String,String> map = Utility.resolveHeaders(headers.getHeaderString("Authorization"));
     		
@@ -61,9 +61,9 @@ public class ExpenseApp {
 			}
     	}catch (Exception ex) {
     		System.out.println("Exception occurred while posting expense :" + ex.getMessage());
-    		return Response.Status.BAD_REQUEST;
+    		return Response.serverError().entity(ex.getMessage()).build();
     	}
-    	return Response.Status.CREATED;
+    	return Response.ok("EXPENSE POSTED").build();
     }
 	
 

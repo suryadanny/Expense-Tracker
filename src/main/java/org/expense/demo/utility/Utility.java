@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class Utility {
 
-	public static Map<String,String> resolveHeaders(String token) {
+	public static Map<String,String> resolveHeaders(String token) throws Exception {
 		String au = token;
 		au= au.replaceFirst("Basic","");
 		Decoder d = Base64.getMimeDecoder();
@@ -16,9 +16,12 @@ public class Utility {
 		String au2 =new String(au1);
 		
 		Map<String,String> map = new HashMap<String,String>();
-		StringTokenizer st = new StringTokenizer(au2, ":");
-		map.put("userId", st.nextToken());
-		
+		try {
+			StringTokenizer st = new StringTokenizer(au2, ":");
+			map.put("userId", st.nextToken());
+		} catch (Exception ex) {
+			throw new Exception("Authorization Not Found");
+		}
 		return map;
 	}
 }
