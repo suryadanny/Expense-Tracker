@@ -31,21 +31,21 @@ public class UserApp {
 	@Path("/register")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response.Status register(User user) {
+	public Response register(User user) {
 		try {
 			userRepo.Register(user);
 		}catch(Exception ex) {
 			System.out.println("Exception occurred while registering new user :" + ex.getMessage());
 			ex.printStackTrace();
-     		return Response.Status.fromStatusCode(500);
+     		return Response.serverError().entity(ex.getMessage()).build();
 		}
-		return Response.Status.CREATED;
+		return Response.ok("USER CREATED").build();
 	}
 	
 	
 	@Path("/reset")
 	@GET
-	public Response.Status resetUserCredentials(@QueryParam("username") String username) {
+	public Response resetUserCredentials(@QueryParam("username") String username) {
 		try {
 			User user = userRepo.getUser(username);
 			if(user != null && user.getEmail() != null) {
@@ -54,9 +54,9 @@ public class UserApp {
 		}catch(Exception ex) {
 			System.out.println("Exception occurred while registering new user :" + ex.getMessage());
 			ex.printStackTrace();
-     		return Response.Status.fromStatusCode(500);
+     		return Response.serverError().entity(ex.getMessage()).build();
 		}
-		return Response.Status.CREATED;
+		return Response.ok("OTP SENT").build();
 	}
 	
 	@Path("/addFriend")
@@ -69,7 +69,7 @@ public class UserApp {
 		} catch (Exception ex) {
 			return Response.serverError().entity(ex.getMessage()).build();
 		}
-		return Response.ok("CREATED").build();
+		return Response.ok("FRIEND ADDED").build();
 
 	}
 	
@@ -81,7 +81,7 @@ public class UserApp {
 			Map<String,String> map = Utility.resolveHeaders(headers.getHeaderString("Authorization"));
 			contactList = userRepo.getAllFriends(Integer.parseInt(map.get("userId")));
 		}catch(Exception ex) {
-			return Response.serverError().entity(ex).build();
+			return Response.serverError().entity(ex.getMessage()).build();
 		}
 		return Response.ok(contactList).build();
 		
