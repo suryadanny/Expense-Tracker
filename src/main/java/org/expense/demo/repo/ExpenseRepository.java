@@ -31,9 +31,9 @@ public class ExpenseRepository {
 			stmt.setString(5, expense.getCurrency());
 			stmt.setTimestamp(6, expense.getTrans_dttm());
 			stmt.setString(7, expense.getPaymentMode());
-			stmt.setInt(8, expense.getUserId());
+			stmt.setInt(8, expense.getOwedUserId());
 			
-			stmt.setObject(9, expense.getOwedUserId());
+			stmt.setObject(9, expense.getOwingUserId());
 			stmt.setObject(10, expense.getGroupId());
 			stmt.executeUpdate();
 
@@ -75,7 +75,7 @@ public class ExpenseRepository {
                 expense.setCurrency(result.getString("currency"));
                 expense.setTrans_dttm(result.getTimestamp("txn_dttm"));
                 expense.setPaymentMode(result.getString("payment_mode"));
-                expense.setUserId(result.getInt("user_id"));
+                expense.setOwedUserId(result.getInt("user_id"));
                 expense.setOwedUserId(result.getInt("owing_user_id"));
                 expense.setGroupId(result.getInt("group_id"));
                 expenses.add(expense);
