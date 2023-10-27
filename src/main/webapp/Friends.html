@@ -13,7 +13,7 @@
   <div class="nav-tabs" id="nav-tabs-id">
     <a href="http://localhost:8085/Expense-Management/PersonalExpenditure.html">Personal</a>
     <a href="#">Friends</a>
-    <a href="#">Group</a>
+    <a href="http://localhost:8085/Expense-Management/Groups.html">Group</a>
   </div>
   <div class="profile-tab">
     <a href="http://localhost:8085/Expense-Management/Profile.html" id="profile-tab-id">Profile</a>
@@ -23,9 +23,61 @@
 </nav>
 
 <div id="addFriendsBtn">
-  <button onclick="addFriend()">Add Friend</button>
+  <button onclick="openTab('addFriendForm')">Add Friend</button>
+  <div id="addFriendForm" class="overlay container">
+    <form action="#" method="POST">
+      <label for="userName">Enter Username:</label><br>
+      <input type="text" id="userName" name="userName" required><br><br>
+
+      <button type="submit" onclick="submitFriendConnection()">Submit</button>
+      <button type="button" onclick="closeTab('addFriendForm')">Close</button>
+    </form>
+  </div>
 </div>
 
+<div id="addFriendExpenseBtn">
+  <button onclick="openTab('addFriendExpenseForm')">Add Expense</button>
+  <div id="addFriendExpenseForm" class="overlay container">
+    <form action="#" method="POST">
+      <label for="title">Title:</label><br>
+      <input type="text" id="title" name="title" required><br><br>
+
+      <label for="amount">Amount:</label><br>
+      <input type="number" id="amount" name="amount" step="0.01" required><br><br>
+
+      <label for="notes">Notes:</label><br>
+      <textarea id="notes" name="notes" rows="5"></textarea><br><br>
+
+      <label for="currency">Currency:</label><br>
+      <select id="currency" name="currency">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <!-- Add more currencies as needed -->
+      </select><br><br>
+
+      <label for="paymentMethod">Payment Method:</label><br>
+      <input type="text" id="paymentMethod" name="paymentMethod" required><br><br>
+
+      <label for="category">Category:</label><br>
+      <select id="category" name="category">
+        <option value="Food">Food</option>
+        <option value="Travel">Travel</option>
+        <option value="Entertainment">Entertainment</option>
+        <!-- Add more categories as needed -->
+      </select><br><br>
+
+      <label for="selectedFriend">Friends:</label><br>
+      <span id="listOfFriendsPlaceholder"></span><br><br>
+
+      <input type="checkbox" id="userPaid">
+      <label for="userPaid">I paid this</label>
+
+      <button type="submit" onclick="submitFriendExpense()">Submit</button>
+      <button type="button" onclick="closeTab('addFriendExpenseForm')">Close</button>
+    </form>
+  </div>
+</div>
 
 
 <div class="container" id="friendsContent">

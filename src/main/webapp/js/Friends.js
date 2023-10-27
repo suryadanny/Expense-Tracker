@@ -40,21 +40,25 @@ function getAllFriends() {
     document.getElementById("friendsContent").innerHTML = allFriendsDetails;
 }
 
-function addFriend() {
-    let gab = document.createElement('div');
-    gab.setAttribute('id', 'OVER');
-    let overlay_start = `<div id="addExpenseForm" class="overlay container">
-    <form action="#" method="POST">
-        <label for="userName">Enter Username:</label><br>
-        <input type="text" id="userName" name="userName" required><br><br>
-
-        <button type="submit" onclick="submitFriendConnection()">Submit</button>
-    </form>
-</div>`
-    gab.innerHTML=overlay_start;
-    document.body.appendChild(gab);
-    // document.getElementById("addExpenseForm").style.display = 'block';
+function addFriedDisplay() {
+    document.getElementById("addFriendForm").style.display = "block";
 }
+
+//function addFriend() {
+//    let gab = document.createElement('div');
+//    gab.setAttribute('id', 'OVER');
+//    let overlay_start = `<div id="addExpenseForm" class="overlay container">
+//    <form action="#" method="POST">
+//        <label for="userName">Enter Username:</label><br>
+//        <input type="text" id="userName" name="userName" required><br><br>
+//
+//        <button type="submit" onclick="submitFriendConnection()">Submit</button>
+//    </form>
+//</div>`
+//    gab.innerHTML=overlay_start;
+//    document.body.appendChild(gab);
+//    // document.getElementById("addExpenseForm").style.display = 'block';
+//}
 
 function submitFriendConnection()
 {
@@ -64,3 +68,54 @@ function submitFriendConnection()
 
     sendInfo(url, null, false);
 }
+
+function submitFriendExpense() {
+    let title = document.getElementById("title").value;
+    let amount = document.getElementById("amount").value;
+    let notes = document.getElementById("notes").value;
+    let currency = document.getElementById("currency").value;
+    let paymentMethod = document.getElementById("paymentMethod").value;
+    let category = document.getElementById("category").value;
+    let selectedFriendID = document.getElementById("selectedFriend").value;
+    let userPaidCheck = document.getElementById("userPaid").checked;
+
+    let payerUserID = selectedFriendID;
+    let currUserID = getCookie("userID")
+    let borrowerID = [currUserID]
+    if (userPaidCheck === true) {
+    payerUserID = currUserID;
+    borrowerID = [selectedFriendID]
+    }
+
+    let payloadJson = {
+            title: title,
+            note: notes,
+            category: category,
+            amount: parseFloat(amount),
+            currency: currency,
+//            owedUserId: payerUserID,
+//            owingUserIds: borrowerID,
+    //        groupId: ""
+        }
+
+        submitExpense(payloadJson);
+}
+
+function populateListOfFriends() {
+    var myParent = document.getElementById("listOfFriendsPlaceholder");
+    let url = "/app/user/getAllFriends";
+    let friendsList = loadJson(url)
+    var selectList = document.createElement("select");
+    selectList.id = "selectedFriend";
+    selectList.name = "selectedFriend";
+    myParent.appendChild(selectList);
+
+    //Create and append the options
+    for (var i = 0; i < friendsList.length; i++) {
+        var option = document.createElement("option");
+        option.value = friendsList[i]["id"];
+        option.text = friendsList[i]["name"];
+        selectList.appendChild(option);
+    }
+}
+populateListOfFriends()

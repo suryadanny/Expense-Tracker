@@ -50,6 +50,7 @@ body {
     text-align:center;
     position:fixed;
     background-color: rgba(0, 4, 9, 0.77);
+    display: none;
 }
 
 button {

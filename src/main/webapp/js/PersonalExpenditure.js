@@ -116,48 +116,48 @@ function generatePIchart(data){
 
 }
 
-function addExpense() {
-    var gab = document.createElement('div');
-    gab.setAttribute('id', 'OVER');
-    let overlay_start = `<div id="addExpenseForm" class="overlay container">
-    <form action="#" method="POST">
-        <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title" required><br><br>
+//function addExpense() {
+//    var gab = document.createElement('div');
+//    gab.setAttribute('id', 'OVER');
+//    let overlay_start = `<div id="addExpenseForm" class="overlay container">
+//    <form action="#" method="POST">
+//        <label for="title">Title:</label><br>
+//        <input type="text" id="title" name="title" required><br><br>
+//
+//        <label for="amount">Amount:</label><br>
+//        <input type="number" id="amount" name="amount" step="0.01" required><br><br>
+//
+//        <label for="notes">Notes:</label><br>
+//        <textarea id="notes" name="notes" rows="5"></textarea><br><br>
+//
+//        <label for="currency">Currency:</label><br>
+//        <select id="currency" name="currency">
+//            <option value="USD">USD</option>
+//            <option value="EUR">EUR</option>
+//            <option value="GBP">GBP</option>
+//            <!-- Add more currencies as needed -->
+//        </select><br><br>
+//
+//        <label for="paymentMethod">Payment Method:</label><br>
+//        <input type="text" id="paymentMethod" name="paymentMethod" required><br><br>
+//
+//        <label for="category">Category:</label><br>
+//        <select id="category" name="category">
+//            <option value="Food">Food</option>
+//            <option value="Travel">Travel</option>
+//            <option value="Entertainment">Entertainment</option>
+//            <!-- Add more categories as needed -->
+//        </select><br><br>
+//
+//        <button type="submit" onclick="submitExpense()">Submit</button>
+//    </form>
+//</div>`
+//    gab.innerHTML=overlay_start;
+//    document.body.appendChild(gab);
+//    // document.getElementById("addExpenseForm").style.display = 'block';
+//}
 
-        <label for="amount">Amount:</label><br>
-        <input type="number" id="amount" name="amount" step="0.01" required><br><br>
-
-        <label for="notes">Notes:</label><br>
-        <textarea id="notes" name="notes" rows="5"></textarea><br><br>
-
-        <label for="currency">Currency:</label><br>
-        <select id="currency" name="currency">
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="GBP">GBP</option>
-            <!-- Add more currencies as needed -->
-        </select><br><br>
-
-        <label for="paymentMethod">Payment Method:</label><br>
-        <input type="text" id="paymentMethod" name="paymentMethod" required><br><br>
-
-        <label for="category">Category:</label><br>
-        <select id="category" name="category">
-            <option value="Food">Food</option>
-            <option value="Travel">Travel</option>
-            <option value="Entertainment">Entertainment</option>
-            <!-- Add more categories as needed -->
-        </select><br><br>
-
-        <button type="submit" onclick="submitExpense()">Submit</button>
-    </form>
-</div>`
-    gab.innerHTML=overlay_start;
-    document.body.appendChild(gab);
-    // document.getElementById("addExpenseForm").style.display = 'block';
-}
-
-function submitExpense()
+function submitPersonalExpense()
 {
     let title = document.getElementById("title").value;
     let amount = document.getElementById("amount").value;
@@ -165,24 +165,18 @@ function submitExpense()
     let currency = document.getElementById("currency").value;
     let paymentMethod = document.getElementById("paymentMethod").value;
     let category = document.getElementById("category").value;
-
-    let url = "/app/expense/postExpense"
+//    let owedUserId = document.getElementBy("owedUser").value;
 
     let payloadJson = {
-        title: title,
-        note: notes,
-        category: category,
-        amount: parseFloat(amount),
-        currency: currency
-    }
+            title: title,
+            note: notes,
+            category: category,
+            amount: parseFloat(amount),
+            currency: currency,
+    //        owedUserId: "",
+    //        owingUserIds: [],
+    //        groupId: ""
+        }
 
-    let payload = JSON.stringify(payloadJson);
-    if(getCookie("userAuth"))
-    {
-        sendInfo(url, payload, false);
-    }
-    else
-    {
-        alert("userAuth not set. Invalid login.");
-    }
+        submitExpense(payloadJson);
 }

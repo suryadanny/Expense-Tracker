@@ -95,7 +95,26 @@ function logout()
     window.location.replace("http://localhost:8085/Expense-Management/Login.html");
 }
 
+function openTab(elemetID) {
+   document.getElementById(elemetID).style.display = "block";
+}
 
+function closeTab(elemetID) {
+    document.getElementById(elemetID).style.display = "none";
+}
+
+function submitExpense(payLoad) {
+    let url = "/app/expense/postExpense"
+    let payloadJson = JSON.stringify(payLoad);
+    if(getCookie("userAuth"))
+    {
+        sendInfo(url, payloadJson, false);
+    }
+    else
+    {
+        alert("userAuth not set. Invalid login.");
+    }
+}
 
 // let x = loadJson("https://jsonware.com/json/abfe005c41c8214e22e487b8d6eff417.json")
 // console.log(x);

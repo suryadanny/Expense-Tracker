@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-  <link rel="stylesheet" href="css/PersonalExpenditure.css">
+    <link rel="stylesheet" href="css/PersonalExpenditure.css">
     <link rel="stylesheet" href="css/Container.css">
     <link rel="stylesheet" href="css/Navbar.css">
-<!--    To generate PIChart-->
-    <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"></script>
-    <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"></script>
 </head>
-<body onload="populateUserExpenditure()">
+<body onload="getAllGroups()">
 
 <nav class="navbar">
     <div class="nav-tabs" id="nav-tabs-id">
         <a href="http://localhost:8085/Expense-Management/PersonalExpenditure.html">Personal</a>
         <a href="http://localhost:8085/Expense-Management/Friends.html">Friends</a>
-        <a href="http://localhost:8085/Expense-Management/Groups.html">Group</a>
+        <a href="#">Group</a>
     </div>
     <div class="profile-tab">
         <a href="http://localhost:8085/Expense-Management/Profile.html" id="profile-tab-id">Profile</a>
@@ -25,9 +22,24 @@
     </div>
 </nav>
 
-<div id="addExpenseBtn">
-    <button onclick="openTab('addExpenseForm')">Add Expense</button>
-    <div id="addExpenseForm" class="overlay container">
+<div id="addGroupBtn">
+    <button onclick="openTab('addGroupForm')">Add new Group</button>
+    <div id="addGroupForm" class="overlay container">
+        <form action="#" method="POST">
+            <label for="newGrpName">Enter New Group's Name:</label><br>
+            <input type="text" id="newGrpName" name="newGrpName" required><br><br>
+
+            <span id="newGrpFriendsList">Select the friends to add:</span>
+
+            <button type="submit" onclick="submitFriendConnection()">Submit</button>
+            <button type="button" onclick="closeTab('addGroupForm')">Close</button>
+        </form>
+    </div>
+</div>
+
+<div id="addFriendExpenseBtn">
+    <button onclick="openTab('addFriendExpenseForm')">Add Expense</button>
+    <div id="addFriendExpenseForm" class="overlay container">
         <form action="#" method="POST">
             <label for="title">Title:</label><br>
             <input type="text" id="title" name="title" required><br><br>
@@ -57,32 +69,34 @@
                 <!-- Add more categories as needed -->
             </select><br><br>
 
-            <label for="listOfFriends" style="display: none;">Friends:</label><br>
-            <span id="listOfFriends" style="display: none;"></span><br><br>
+            <label for="selectedFriend">Friends:</label><br>
+            <span id="listOfFriendsPlaceholder"></span><br><br>
 
-            <button type="submit" onclick="submitPersonalExpense()">Submit</button>
-            <button type="button" onclick="closeTab('addExpenseForm')">Close</button>
+            <input type="checkbox" id="userPaid">
+            <label for="userPaid">I paid this</label>
+
+            <button type="submit" onclick="submitFriendExpense()">Submit</button>
+            <button type="button" onclick="closeTab('addFriendExpenseForm')">Close</button>
         </form>
     </div>
 </div>
 
 
 
-<div class="container" id="expenditureContent">
-<!--    <div class="horizontal-bar">-->
-<!--        <div class="col-5"></div>-->
-<!--        <div class="col-4">-->
-<!--            <div class="bar-title">Title: Grocery Shopping</div>-->
-<!--            <div class="bar-cost">Cost: $50</div>-->
-<!--            <div class="bar-date">Date: 2023-09-27</div>-->
-<!--            <div class="bar-category">Category: Food</div>-->
-<!--        </div>-->
-<!--    </div>-->
+<div class="container" id="friendsContent">
+    <!--    <div class="horizontal-bar">-->
+    <!--        <div class="col-5"></div>-->
+    <!--        <div class="col-4">-->
+    <!--            <div class="bar-title">Title: Grocery Shopping</div>-->
+    <!--            <div class="bar-cost">Cost: $50</div>-->
+    <!--            <div class="bar-date">Date: 2023-09-27</div>-->
+    <!--            <div class="bar-category">Category: Food</div>-->
+    <!--        </div>-->
+    <!--    </div>-->
 
 </div>
-<div id="pieChart" style="width: 100%; height: 100%"></div>
 <script src="js/functionality.js"></script>
 <script src="js/Navbar.js"></script>
-<script src="js/PersonalExpenditure.js"></script>
+<script src="js/Groups.js"></script>
 </body>
 </html>
