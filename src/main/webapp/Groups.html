@@ -41,6 +41,9 @@
 <!--    <button onclick="openTab('updateGroupExpenseForm')">Add Expense</button>-->
     <div id="updateGroupExpenseForm" class="overlay container" style="display: none;">
         <form action="#" method="POST">
+            <label for="groupIdDisplay">GroupID:</label>
+            <span id="groupIdDisplay"></span><br><br>
+
             <label for="title">Title:</label><br>
             <input type="text" id="title" name="title" required><br><br>
 
@@ -74,7 +77,7 @@
 
             <span id="listOfPotentialPayeesPlaceHolder">Select the friends to split amongst:</span>
 
-            <button type="submit" onclick="submitFriendExpense()">Submit</button>
+            <button type="submit" onclick="submitUpdateGroupExpense()">Submit</button>
             <button type="button" onclick="closeTab('updateGroupExpenseForm')">Close</button>
         </form>
     </div>

@@ -142,11 +142,41 @@ function updateGroupExpenseFunc(groupID) {
             break;
         }
     }
+    document.getElementById('groupIdDisplay').innerHTML = groupID;
     populateListOfPotentialPayers(grpUserIdsList);
     generateFriendListCheckbox("listOfPotentialPayeesPlaceHolder", grpUserIdsList);
     openTab('updateGroupExpenseForm');
     console.log(groupID);
 
+}
+
+function submitUpdateGroupExpense() {
+    let groupID = document.getElementById('groupIdDisplay').innerHTML;
+    let title = document.getElementById("title").value;
+    let amount = document.getElementById("amount").value;
+    let notes = document.getElementById("notes").value;
+    let currency = document.getElementById("currency").value;
+    let paymentMethod = document.getElementById("paymentMethod").value;
+    let category = document.getElementById("category").value;
+    let selectedPayerID = document.getElementById("selectedPayer").value;
+    let payeeIDList = []
+    let checkedBoxes = document.querySelectorAll('input[name=addGrpExpenseCheckBox]:checked');
+        for (let i=0; i<checkedBoxes.length; i++){
+            payeeIDList.push(checkedBoxes[i].value);
+        }
+
+    let payloadJson = {
+            title: title,
+            note: notes,
+            category: category,
+            amount: parseFloat(amount),
+            currency: currency,
+//            owedUserId: selectedPayerID,
+//            owingUserIds: payeeIDList,
+    //        groupId: groupID
+        }
+
+//        submitExpense(payloadJson);
 }
 
 function submitNewGroup()
