@@ -1,169 +1,43 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
- 
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
- 
-<!-- Set the page to the width of the device and set the zoon level -->
-<meta name="viewport" content="width = device-width, initial-scale = 1">
-<title>Login</title>
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-
-<link rel="stylesheet" href="style.css" type = "text/css ">
-
-<style>
-
-body{
-	height:100%;
-	widht:100%
-	
-}
-
-.navbar{
-    min-height:20px !important  ;
-	background-color : #000000;
-	padding: 1% 0;
-	font-size: 1.2em;
-}
-
-.navbar-brand{
-     
-     padding: 0 5px 5px ;
-
-}
-#home{
-  background: url("C:/soft/eclipse/eclipse/workspace/visitor_api/src/main/webapp/mastercard1.jpg");
-  background-repeat: no-repeat ;
-  padding: 100px 0 0;
-  display: table;
-  height:100%;
-  position: relative;
-  width:100%;
-  background-size:cover;
-}
-
-
-
-.landing-text h1{
-       vertical-align: middle;
-     text-align: center;
-       padding:  150px 0 0;
-
-}
- 
-#formtype{
-   padding: 50px 0 0;
-}
-
-#visit{
-  padding: 10px 0 0;
-}
-
-</style>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js" integrity="sha256-uEFhyfv3UgzRTnAZ+SEgvYepKKB0FW6RqZLrqfyUNug=" crossorigin="anonymous"></script>	
-	
-<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min"></script>-->
-
-<script>
-
- var username = null;
- username =$.cookie('username');
- 
- if(username != null) 
-	 {
-	    window.location.replace('http://localhost:8888/visitor_api/admin.html');
-	   
-	 }
- 
-
-
-</script>
-
-
-
-
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="css/Navbar.css">
+    <link rel="stylesheet" href="css/Login.css">
 </head>
-
 <body>
-
-
-<nav class = "navbar navbar-default navbar-fixed-top" role ="navigation">
-    <div class="container">
-        <div class="navbar-header">
-           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
-               <span class ="sr-only">Toggle navigation </span>
-               <span class =" icon-bar"></span>
-               
-           </button>    
-           <a class="navbar-brand" href="http://localhost:8888/visitor_api/visitorRegister.html"><img src="C:\soft\eclipse\eclipse\workspace\visitor_api\src\main\webapp\mastercard2.jpg" width = "65" height ="45" >
-           </a>
-           
-           
-        
-        </div>
-    
-    
+<nav class="navbar">
+    <div class="nav-tabs" id="nav-tabs-id">
+        <a href="http://localhost:8085/Expense-Management/PersonalExpenditure.html">Personal</a>
+        <a href="http://localhost:8085/Expense-Management/Friends.html">Friends</a>
+        <a href="http://localhost:8085/Expense-Management/Groups.html">Group</a>
     </div>
-
-
+    <div class="profile-tab">
+        <a href="http://localhost:8085/Expense-Management/Profile.html" id="profile-tab-id">Profile</a>
+        <a href="#" onclick="logout()" id="logout-tab-id">Logout</a>
+        <a href="#" id="login-tab-id">Login</a>
+    </div>
 </nav>
+<div class="login-container-main">
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="#" method="POST" id="loginForm">
+            <label for="userName">Email:</label>
+            <input type="text" id="userName" name="userName" required><br><br>
 
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
 
-<div class="landing-text">
-      <h1>Administrator Login</h1>
- 
- </div>
-<div class="container fluid" id ="formtype">
+            <button type="submit" onclick="login()">Login</button>
+        </form>
 
-
- 
- <div  class ="row">
- 
-    <div class = "col-md-4 col-sm-4 col-xs-12"></div> 
-    
-    
-    <div class="col-md-4 col-sm-4 col-xs-12">
-    
-  <form id="add" action= "loginauth" method ="post">
-    
-    
-    <div class="form-group">  
-    <label for="usern">User Name</label>
-    <input type="text" class="form-control" name="usern" id= "usern" placeholder="Enter User Name"> 
+        <p>Don't have an account? <a href="Registration.html">Register here</a>.</p>
     </div>
-  
-    <div class="form-group">  
-    <label for="passwd">Password</label>
-    <input type="password" class="form-control" name="passwd" id = "passwd"  placeholder="Enter Password">
-    </div>
- 
-    
-    
-  
-    <input type="submit" class="btn btn-primary" value="Login">
-  </form>
-     
-  </div>
-    
-    <div class = "col-md-4 col-sm-4 col-xs-12"></div> 
-    
- </div>
-
 </div>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js" integrity="sha256-uEFhyfv3UgzRTnAZ+SEgvYepKKB0FW6RqZLrqfyUNug=" crossorigin="anonymous"></script>	
-	
-<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min"></script>-->
-
-
-
+<script src="js/functionality.js"></script>
+<script src="js/Navbar.js"></script>
+<script src="js/Login.js"></script>
 </body>
 </html>

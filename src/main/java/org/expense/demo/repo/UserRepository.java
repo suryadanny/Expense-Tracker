@@ -18,8 +18,8 @@ public class UserRepository {
 	public void Register(User user) throws Exception{
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "root",
+					"admin");
 			String sql = "insert into users (username, name , email ,mobile ,password) values(?,?,?,?,?)";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
@@ -44,8 +44,8 @@ public class UserRepository {
 		User user = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "root",
+					"admin");
 			String sql = "select * from users where username = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
@@ -71,12 +71,45 @@ public class UserRepository {
 		
 		return user;
 	}
+
+	public User getUser(int userID) throws Exception{
+		User user = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "root",
+					"admin");
+			String sql = "select * from users where id = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+			stmt.setInt(1,userID);
+			ResultSet result = stmt.executeQuery();
+			if(result.next()) {
+				user = new User();
+				user.setId(userID);
+				user.setPassword(result.getString("password"));
+				user.setEmail(result.getString("email"));
+				user.setUsername(result.getString("username"));
+				user.setMobile(result.getString("mobile"));
+				user.setName(result.getString("name"));
+			}
+			stmt.close();
+
+		} catch (SQLException e) {
+			System.out.println("Exception occurred while getting user :" + e.getMessage());
+			throw e;
+		} catch (ClassNotFoundException ex) {
+			System.out.println("Exception occurred while getting user :" + ex.getMessage());
+			throw ex;
+		}
+
+		return user;
+	}
 	
 	public void addFriend(Integer userId , String friendUsername)throws Exception {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "root",
+					"admin");
 			String sql = "select * from users where username = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
@@ -110,8 +143,8 @@ public class UserRepository {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "root",
+					"admin");
 			String sql = "select * from network where user_id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
