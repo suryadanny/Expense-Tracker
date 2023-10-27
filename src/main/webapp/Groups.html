@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/Container.css">
     <link rel="stylesheet" href="css/Navbar.css">
 </head>
-<body onload="getAllGroups()">
+<body onload="bodyOnLoad()">
 
 <nav class="navbar">
     <div class="nav-tabs" id="nav-tabs-id">
@@ -23,7 +23,7 @@
 </nav>
 
 <div id="addGroupBtn">
-    <button onclick="openTab('addGroupForm')">Add new Group</button>
+    <button onclick="openTab('addGroupForm')">Add New Group</button>
     <div id="addGroupForm" class="overlay container">
         <form action="#" method="POST">
             <label for="newGrpName">Enter New Group's Name:</label><br>
@@ -31,15 +31,15 @@
 
             <span id="newGrpFriendsList">Select the friends to add:</span>
 
-            <button type="submit" onclick="submitFriendConnection()">Submit</button>
+            <button type="submit" onclick="submitNewGroup()">Submit</button>
             <button type="button" onclick="closeTab('addGroupForm')">Close</button>
         </form>
     </div>
 </div>
 
-<div id="addFriendExpenseBtn">
-    <button onclick="openTab('addFriendExpenseForm')">Add Expense</button>
-    <div id="addFriendExpenseForm" class="overlay container">
+<div id="updateGroupExpense">
+<!--    <button onclick="openTab('updateGroupExpenseForm')">Add Expense</button>-->
+    <div id="updateGroupExpenseForm" class="overlay container" style="display: none;">
         <form action="#" method="POST">
             <label for="title">Title:</label><br>
             <input type="text" id="title" name="title" required><br><br>
@@ -69,21 +69,20 @@
                 <!-- Add more categories as needed -->
             </select><br><br>
 
-            <label for="selectedFriend">Friends:</label><br>
-            <span id="listOfFriendsPlaceholder"></span><br><br>
+            <label for="selectedPayer">Payer:</label><br>
+            <span id="listOfPotentialPayersPlaceholder"></span><br><br>
 
-            <input type="checkbox" id="userPaid">
-            <label for="userPaid">I paid this</label>
+            <span id="listOfPotentialPayeesPlaceHolder">Select the friends to split amongst:</span>
 
             <button type="submit" onclick="submitFriendExpense()">Submit</button>
-            <button type="button" onclick="closeTab('addFriendExpenseForm')">Close</button>
+            <button type="button" onclick="closeTab('updateGroupExpenseForm')">Close</button>
         </form>
     </div>
 </div>
 
 
 
-<div class="container" id="friendsContent">
+<div class="container" id="groupsContent">
     <!--    <div class="horizontal-bar">-->
     <!--        <div class="col-5"></div>-->
     <!--        <div class="col-4">-->
