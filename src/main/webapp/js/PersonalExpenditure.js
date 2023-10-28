@@ -51,32 +51,35 @@ function populateUserExpenditure()
     let categoryCounter = {};
     let pieChartData = [];
     console.log(expenditure);
+    let userID = Number(getCookie("userID"));
 
     for (let i=0; i<expenditure.length; i++)
     {
-        let title = expenditure[i]["title"];
-        let cost = expenditure[i]["amount"];
-        let currency = currencySym[expenditure[i]["currency"]];
-        let date = expenditure[i]["date"];
-        let category = expenditure[i]["category"];
-        let note = expenditure[i]["note"];
-        let newRow =
-            horizontal_bar_open +
-            firstColOpenAndClose +
-            secondColOpen +
-            titleEntryDiv + title + closeDiv +
-            costEntryDiv + currency + cost + closeDiv +
-            dateEntryDiv + date + closeDiv +
-            categoryEntryDiv + category + closeDiv +
-            closeDiv +
-            closeDiv;
+        if(expenditure[i]["owedUserId"] === userID && expenditure[i]["groupId"] === 0 && expenditure[i]["owingUserId"][0] === 0 ) {
+            let title = expenditure[i]["title"];
+            let cost = expenditure[i]["amount"];
+            let currency = currencySym[expenditure[i]["currency"]];
+            let date = expenditure[i]["date"];
+            let category = expenditure[i]["category"];
+            let note = expenditure[i]["note"];
+            let newRow =
+                horizontal_bar_open +
+                firstColOpenAndClose +
+                secondColOpen +
+                titleEntryDiv + title + closeDiv +
+                costEntryDiv + currency + cost + closeDiv +
+                dateEntryDiv + date + closeDiv +
+                categoryEntryDiv + category + closeDiv +
+                closeDiv +
+                closeDiv;
 
-        expenditureContent += newRow;
-        if (!Object.hasOwn(categoryCounter, category))
-        {
-            categoryCounter[category] = 0;
+            expenditureContent += newRow;
+            if (!Object.hasOwn(categoryCounter, category))
+            {
+                categoryCounter[category] = 0;
+            }
+            categoryCounter[category] += 1;
         }
-        categoryCounter[category] += 1;
     }
 
     for (const [key, value] of Object.entries(categoryCounter)) {
@@ -115,47 +118,6 @@ function generatePIchart(data){
     chart.draw();
 
 }
-
-//function addExpense() {
-//    var gab = document.createElement('div');
-//    gab.setAttribute('id', 'OVER');
-//    let overlay_start = `<div id="addExpenseForm" class="overlay container">
-//    <form action="#" method="POST">
-//        <label for="title">Title:</label><br>
-//        <input type="text" id="title" name="title" required><br><br>
-//
-//        <label for="amount">Amount:</label><br>
-//        <input type="number" id="amount" name="amount" step="0.01" required><br><br>
-//
-//        <label for="notes">Notes:</label><br>
-//        <textarea id="notes" name="notes" rows="5"></textarea><br><br>
-//
-//        <label for="currency">Currency:</label><br>
-//        <select id="currency" name="currency">
-//            <option value="USD">USD</option>
-//            <option value="EUR">EUR</option>
-//            <option value="GBP">GBP</option>
-//            <!-- Add more currencies as needed -->
-//        </select><br><br>
-//
-//        <label for="paymentMethod">Payment Method:</label><br>
-//        <input type="text" id="paymentMethod" name="paymentMethod" required><br><br>
-//
-//        <label for="category">Category:</label><br>
-//        <select id="category" name="category">
-//            <option value="Food">Food</option>
-//            <option value="Travel">Travel</option>
-//            <option value="Entertainment">Entertainment</option>
-//            <!-- Add more categories as needed -->
-//        </select><br><br>
-//
-//        <button type="submit" onclick="submitExpense()">Submit</button>
-//    </form>
-//</div>`
-//    gab.innerHTML=overlay_start;
-//    document.body.appendChild(gab);
-//    // document.getElementById("addExpenseForm").style.display = 'block';
-//}
 
 function submitPersonalExpense()
 {

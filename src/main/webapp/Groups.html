@@ -38,7 +38,27 @@
 </div>
 
 <div id="updateGroupExpense">
+    <div id="showOpOptions" class="overlay container" style="display: none;">
+        <label for="groupIdDisplay2">GroupID:</label>
+        <span id="groupIdDisplay2"></span><br><br>
+
+        <button onclick="groupUpdateOP('updateGroupDetailsForm')">Update Group Details</button>
+        <button onclick="groupUpdateOP('updateGroupExpenseForm')">Update Group Expenses</button>
+    </div>
 <!--    <button onclick="openTab('updateGroupExpenseForm')">Add Expense</button>-->
+    <div id="updateGroupDetailsForm" class="overlay container" style="display: none;">
+        <form action="#" method="POST">
+            <label for="groupIdDisplay1">GroupID:</label>
+            <span id="groupIdDisplay1"></span><br><br>
+
+            <label for="groupNameDisplay">Group Name:</label>
+            <span id="groupNameDisplay"></span><br><br>
+
+            <span id="listOfPotentialNewPeoplePlaceHolder">Select the friends to add to the group:</span>
+            <button type="submit" onclick="submitUpdateGroupDetails()">Submit</button>
+            <button type="button" onclick="closeTab('updateGroupDetailsForm')">Close</button>
+        </form>
+    </div>
     <div id="updateGroupExpenseForm" class="overlay container" style="display: none;">
         <form action="#" method="POST">
             <label for="groupIdDisplay">GroupID:</label>
