@@ -54,7 +54,7 @@ public class ExpenseApp {
     		
 			if (map.containsKey("userId")) {
 				System.out.println("user id  : "+ map.get("userId"));
-				expense.setUserId(Integer.parseInt(map.get("userId")));
+				expense.setOwedUserId(Integer.parseInt(map.get("userId")));
 				expense.setTrans_dttm(Timestamp.from(Instant.now()));
 				expenseRepo.addExpense(expense);
 
@@ -64,6 +64,27 @@ public class ExpenseApp {
     		return Response.serverError().entity(ex.getMessage()).build();
     	}
     	return Response.ok("EXPENSE POSTED").build();
+    }
+    
+    @POST
+    @Path("/postSplitExpense")
+    @Consumes(MediaType.APPLICATION_JSON)
+	public Response postExpenseSplit(@Context HttpHeaders headers, Expense expense) {
+    	try {
+    		Map<String,String> map = Utility.resolveHeaders(headers.getHeaderString("Authorization"));
+    		
+			if (map.containsKey("userId")) {
+				System.out.println("user id  : "+ map.get("userId"));
+				//expense.setOwedUserId(Integer.parseInt(map.get("userId")));
+				expense.setTrans_dttm(Timestamp.from(Instant.now()));
+				expenseRepo.addExpense(expense);
+
+			}
+    	}catch (Exception ex) {
+    		System.out.println("Exception occurred while posting expense :" + ex.getMessage());
+    		return Response.serverError().entity(ex.getMessage()).build();
+    	}
+    	return Response.ok("SPLIT EXPENSE POSTED").build();
     }
 	
 

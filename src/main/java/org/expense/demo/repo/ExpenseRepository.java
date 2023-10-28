@@ -13,41 +13,47 @@ import org.expense.demo.model.Expense;
 public class ExpenseRepository {
 
 	public void addExpense(Expense expense) throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
+				"lingam1998");
+		conn.setAutoCommit(false);
 		try
 		{
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-					"lingam1998");
+			
 			String st = "insert into expenses"
 					+ " (title, notes,category, amount,currency,txn_dttm,payment_mode,user_id, owing_user_id,group_id)"
 					+ "values(?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement stmt = conn.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
-
+			int splitSize = 1;
+			if(expense.getOwingUserId() != null && expense.getOwingUserId().size() >0) {
+				splitSize = expense.getOwingUserId().size();
+			}
+				
+          for(Integer owingUserId : expense.getOwingUserId()) {
 			stmt.setString(1, expense.getTitle());
 			stmt.setString(2, expense.getNote());
 			stmt.setString(3, expense.getCategory());
-			stmt.setDouble(4, expense.getAmount());
+			stmt.setDouble(4, expense.getAmount()/splitSize);
 			stmt.setString(5, expense.getCurrency());
 			stmt.setTimestamp(6, expense.getTrans_dttm());
 			stmt.setString(7, expense.getPaymentMode());
-			stmt.setInt(8, expense.getUserId());
+			stmt.setInt(8, expense.getOwedUserId());
 			
-			stmt.setObject(9, expense.getOwedUserId());
+			stmt.setObject(9, owingUserId);
 			stmt.setObject(10, expense.getGroupId());
 			stmt.executeUpdate();
+		   }
+          conn.commit();
 
 		}
 		catch(SQLException e)
 		{
 			System.out.println("Exception occurred while storing expense :" + e.getMessage());
+			conn.rollback();
 			throw e;
 		}
-		catch(ClassNotFoundException ex)
-		{
-			System.out.println("Exception occurred while storing expense :" + ex.getMessage());
-			throw ex;
-		}
+		
 		
 		
 	}
@@ -75,7 +81,7 @@ public class ExpenseRepository {
                 expense.setCurrency(result.getString("currency"));
                 expense.setTrans_dttm(result.getTimestamp("txn_dttm"));
                 expense.setPaymentMode(result.getString("payment_mode"));
-                expense.setUserId(result.getInt("user_id"));
+                expense.setOwedUserId(result.getInt("user_id"));
                 expense.setOwedUserId(result.getInt("owing_user_id"));
                 expense.setGroupId(result.getInt("group_id"));
                 expenses.add(expense);

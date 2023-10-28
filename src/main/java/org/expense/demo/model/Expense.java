@@ -1,6 +1,7 @@
 package org.expense.demo.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 //object model of the visitor 
@@ -15,8 +16,14 @@ public class Expense {
 	private Double amount;
 	private String currency;
 	private Timestamp trans_dttm;
-	private Integer userId;
 	private Integer owedUserId;
+	private List<Integer> owingUserId;
+	public List<Integer> getOwingUserId() {
+		return owingUserId;
+	}
+	public void setOwingUserId(List<Integer> owingUserId) {
+		this.owingUserId = owingUserId;
+	}
 	private Integer groupId;
 	
 	public Timestamp getTrans_dttm() {
@@ -67,12 +74,7 @@ public class Expense {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+	
 	public Integer getOwedUserId() {
 		return owedUserId;
 	}

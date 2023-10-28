@@ -18,7 +18,9 @@ import javax.ws.rs.core.Response;
 //import javax.xml.ws.soap.AddressingFeature.Responses;
 
 import org.expense.demo.model.Contact;
+import org.expense.demo.model.Group;
 import org.expense.demo.model.User;
+import org.expense.demo.repo.GroupRepository;
 import org.expense.demo.repo.UserRepository;
 import org.expense.demo.service.OTPService;
 import org.expense.demo.utility.Utility;
@@ -28,6 +30,7 @@ public class UserApp {
 
 	private UserRepository userRepo = new UserRepository();
 	private OTPService otpService = new OTPService();
+	private GroupRepository groupRepo = new GroupRepository();
 	
 	@Path("/register")
 	@POST
@@ -107,4 +110,28 @@ public class UserApp {
 		return Response.ok(userInfo).build();
 	}
 	
+	@Path("/group/create")
+	@POST
+	public Response createGroup(Group group) {
+		try {
+			groupRepo.createGroup(group);
+			
+		}catch(Exception ex){
+			return Response.serverError().entity(ex.getMessage()).build();
+		}
+		return Response.ok("Group Created").build();
+	}
+	
+	@Path("/group/all")
+	@GET
+	public Response getAllGroups(@Context HttpHeaders headers) {
+		List<Group> groupList = new ArrayList<Group>();
+		try {
+			Map<String,String> map = Utility.resolveHeaders(headers.getHeaderString("Authorization"));
+			groupList = groupRepo.getAllGroups(Integer.parseInt(map.get("userId")));
+		}catch(Exception ex) {
+			return Response.serverError().entity(ex.getMessage()).build();
+		}
+		return Response.ok(groupList).build();
+	}
 }

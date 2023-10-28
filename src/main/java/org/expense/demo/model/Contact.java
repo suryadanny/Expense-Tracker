@@ -6,6 +6,7 @@ public class Contact {
 	private String name;
 	private String email;
 	private String mobile;
+	private Double amountOwed;
 	public int getId() {
 		return id;
 	}
@@ -26,6 +27,12 @@ public class Contact {
 	public Contact setName(String name) {
 		this.name = name;
 		return this;
+	}
+	public Double getAmountOwed() {
+		return amountOwed;
+	}
+	public void setAmountOwed(Double amountOwed) {
+		this.amountOwed = amountOwed;
 	}
 	public String getEmail() {
 		return email;

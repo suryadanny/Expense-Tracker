@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.expense.demo.model.Contact;
 import org.expense.demo.model.User;
@@ -152,6 +154,8 @@ public class UserRepository {
 			while(result.next()) {
 				 friendUserId = result.getInt("conn_user_id");
 				sql = "select * from users where id = ?";
+				
+				Map<Integer,Double> amountPerUserSplit = amountOwedBYUser(userId);
 				PreparedStatement getUser = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_UPDATABLE);
 				//insetToNetwork.setInt(1,userId);
@@ -161,8 +165,9 @@ public class UserRepository {
 					Contact contact  = new Contact();
 					contact.setId(friend.getInt("id")).setUsername(friend.getString("username"))
 							.setName(friend.getString("name")).setEmail(friend.getString("email"))
-							.setMobile(friend.getString("mobile"));
+							.setMobile(friend.getString("mobile")).setAmountOwed(amountPerUserSplit.getOrDefault(contact.getId(), 0.0));
 					contactList.add(contact);
+					
 				}
 			}
 		}catch (SQLException e) {
@@ -173,5 +178,38 @@ public class UserRepository {
 			throw ex;
 		}
 		return contactList;
+	}
+	
+	
+	public Map<Integer,Double> amountOwedBYUser(Integer userId){
+		Map<Integer,Double> amtPerUser = new HashMap<Integer,Double>();
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
+					"lingam1998");
+			
+			String amountCalcSql = "select owing_user_id as id, sum(amount) as owed from (\r\n"
+					+ "select  owing_user_id , sum(amount) as amount from expenses where user_id = ? and owing_user_id is not null group by Owing_User_id\r\n"
+					+ "union  \r\n"
+					+ "select  user_id , sum(-amount) as amount from expenses where owing_user_id = ? and owing_user_id is not null group by user_id) agg group by owing_user_id\r\n"
+					+ ""; 
+			
+			PreparedStatement amtCal = conn.prepareStatement(amountCalcSql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+			amtCal.setInt(1, userId);
+			amtCal.setInt(2, userId);
+			ResultSet result = amtCal.executeQuery();
+			
+			while(result.next()) {
+				amtPerUser.put(result.getInt(1), result.getDouble(2));
+				
+			}
+			result.close();
+			amtCal.close();
+			
+		}catch(Exception ex) {
+			System.out.println("Error occurred while calculating per user expense split");
+		}
+		return amtPerUser;
 	}
 }
