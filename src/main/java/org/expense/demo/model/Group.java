@@ -4,17 +4,17 @@ import java.util.List;
 
 public class Group {
     private String groupName;
-    private int groupId;
+    private Integer groupId;
     private List<Integer> userIdList;
-    private Integer amount;
-    private Integer totalGroupSpend;
+    private Double amount;
+    private Double totalGroupSpend;
 	public String getGroupName() {
 		return groupName;
 	}
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-	public int getGroupId() {
+	public Integer getGroupId() {
 		return groupId;
 	}
 	public void setGroupId(int groupId) {
@@ -26,16 +26,16 @@ public class Group {
 	public void setUserIdList(List<Integer> userIdList) {
 		this.userIdList = userIdList;
 	}
-	public Integer getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
-	public void setAmount(Integer amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-	public Integer getTotalGroupSpend() {
+	public Double getTotalGroupSpend() {
 		return totalGroupSpend;
 	}
-	public void setTotalGroupSpend(Integer totalGroupSpend) {
+	public void setTotalGroupSpend(Double totalGroupSpend) {
 		this.totalGroupSpend = totalGroupSpend;
 	}
     

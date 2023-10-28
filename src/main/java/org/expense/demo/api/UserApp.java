@@ -122,4 +122,16 @@ public class UserApp {
 		return Response.ok("Group Created").build();
 	}
 	
+	@Path("/group/all")
+	@GET
+	public Response getAllGroups(@Context HttpHeaders headers) {
+		List<Group> groupList = new ArrayList<Group>();
+		try {
+			Map<String,String> map = Utility.resolveHeaders(headers.getHeaderString("Authorization"));
+			groupList = groupRepo.getAllGroups(Integer.parseInt(map.get("userId")));
+		}catch(Exception ex) {
+			return Response.serverError().entity(ex.getMessage()).build();
+		}
+		return Response.ok(groupList).build();
+	}
 }
