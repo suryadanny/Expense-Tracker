@@ -139,6 +139,7 @@ function displayUpdateGroupDetails(groupID) {
 
     let url = "/app/user/getAllFriends";
     let allFriendsList = loadJson(url);
+    groupID = Number(groupID)
 
     let userIdsOfGrpList = [];
     let groupNameDisplay = "";
@@ -158,7 +159,7 @@ function displayUpdateGroupDetails(groupID) {
     }
     document.getElementById('groupIdDisplay1').innerHTML = groupID;
     document.getElementById('groupNameDisplay').innerHTML = groupNameDisplay;
-    generateFriendListCheckbox("listOfPotentialPayeesPlaceHolder", remainingUserIDs);
+    generateFriendListCheckbox("listOfPotentialNewPeoplePlaceHolder", remainingUserIDs);
     openTab('updateGroupDetailsForm');
 }
 
@@ -223,6 +224,7 @@ function updateGroupExpenseFunc(groupID) {
              },
         ]
     let userIdsOfGrpList = [];
+    groupID = Number(groupID)
     for (let i=0; i<groupsList.length; i++) {
         if(groupID === groupsList[i]["groupID"]){
             userIdsOfGrpList = groupsList[i]["userIdList"];

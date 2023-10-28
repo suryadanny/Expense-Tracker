@@ -43,7 +43,7 @@
         <span id="groupIdDisplay2"></span><br><br>
 
         <button onclick="groupUpdateOP('updateGroupDetailsForm')">Update Group Details</button>
-        <button onclick="openTab('updateGroupExpenseForm')">Update Group Expenses</button>
+        <button onclick="groupUpdateOP('updateGroupExpenseForm')">Update Group Expenses</button>
     </div>
 <!--    <button onclick="openTab('updateGroupExpenseForm')">Add Expense</button>-->
     <div id="updateGroupDetailsForm" class="overlay container" style="display: none;">
@@ -56,7 +56,7 @@
 
             <span id="listOfPotentialNewPeoplePlaceHolder">Select the friends to add to the group:</span>
             <button type="submit" onclick="submitUpdateGroupDetails()">Submit</button>
-            <button type="button" onclick="closeTab('updateGroupDetails')">Close</button>
+            <button type="button" onclick="closeTab('updateGroupDetailsForm')">Close</button>
         </form>
     </div>
     <div id="updateGroupExpenseForm" class="overlay container" style="display: none;">
