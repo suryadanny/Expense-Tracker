@@ -29,7 +29,7 @@ public class ExpenseRepository {
 			if(expense.getOwingUserId() != null && expense.getOwingUserId().size() >0) {
 				splitSize = expense.getOwingUserId().size();
 			}
-				
+		if(expense.getOwingUserId() != null && !expense.getOwingUserId().isEmpty() ) {		
           for(Integer owingUserId : expense.getOwingUserId()) {
 			stmt.setString(1, expense.getTitle());
 			stmt.setString(2, expense.getNote());
@@ -44,6 +44,19 @@ public class ExpenseRepository {
 			stmt.setObject(10, expense.getGroupId());
 			stmt.executeUpdate();
 		   }
+		}else {
+			stmt.setString(1, expense.getTitle());
+			stmt.setString(2, expense.getNote());
+			stmt.setString(3, expense.getCategory());
+			stmt.setDouble(4, expense.getAmount()/splitSize);
+			stmt.setString(5, expense.getCurrency());
+			stmt.setTimestamp(6, expense.getTrans_dttm());
+			stmt.setString(7, expense.getPaymentMode());
+			stmt.setInt(8, expense.getOwedUserId());
+			stmt.setObject(9, null);
+			stmt.setObject(10, expense.getGroupId());
+			stmt.executeUpdate();
+		}
           conn.commit();
 
 		}
