@@ -82,7 +82,9 @@ public class ExpenseRepository {
                 expense.setTrans_dttm(result.getTimestamp("txn_dttm"));
                 expense.setPaymentMode(result.getString("payment_mode"));
                 expense.setOwedUserId(result.getInt("user_id"));
-                expense.setOwedUserId(result.getInt("owing_user_id"));
+                List<Integer> userIdList = new ArrayList<Integer>();
+                userIdList.add(result.getInt("owing_user_id"));
+                expense.setOwingUserId(userIdList);
                 expense.setGroupId(result.getInt("group_id"));
                 expenses.add(expense);
 			}

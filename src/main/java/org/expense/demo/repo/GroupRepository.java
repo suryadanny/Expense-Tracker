@@ -58,11 +58,12 @@ public class GroupRepository {
 	
 	public List<Group> getAllGroups(Integer userId)throws Exception{
 		Map<Integer,Group> groupMap = new HashMap<Integer,Group>();
+		List<Group> groupList = new ArrayList<Group>();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "root",
-					"admin");
-			String sql = "select *  from split_group where group_id in ( select group_id from group_split where user_id = ?)";
+					"lingam1998");
+			String sql = "select *  from split_group where group_id in ( select group_id from split_group where user_id = ?)";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
 			stmt.setInt(1,userId);
@@ -96,7 +97,8 @@ public class GroupRepository {
 			System.out.println("Exception occurred while getting user :" + ex.getMessage());
 			throw ex;
 		}
-		return (List<Group>)groupMap.values();
+		groupList.addAll(groupMap.values());
+		return groupList ;
 		
 		
 	}
