@@ -12,6 +12,8 @@ function getAllFriends() {
     let userIDEntryDiv = "<div class=\"bar-date\">UserID: ";
     let emailEntryDiv = "<div class=\"bar-category\">Email: ";
     let mobileEntryDiv = "<div class=\"bar-category\">Mobile: ";
+    let amountEntryDivPart1 = "<div class=\"bar-date\" style=\"color: ";
+    let amountEntryDivPart2 = "\">Amount: ";
 
     let allFriendsDetails = "";
 
@@ -22,6 +24,12 @@ function getAllFriends() {
         let email = friendsList[i]["email"];
         // let category = expenditure[i]["category"];
         let mobile = friendsList[i]["mobile"];
+        let amount = friendsList[i]["amountOwed"];
+        let color = "green";
+        if (amount < 0){
+            color = "red";
+            amount = amount * -1;
+        }
         let newRow =
             horizontal_bar_open +
             firstColOpenAndClose +
@@ -31,6 +39,7 @@ function getAllFriends() {
             userIDEntryDiv + id + closeDiv +
             emailEntryDiv + email + closeDiv +
             mobileEntryDiv + mobile + closeDiv +
+            amountEntryDivPart1 + color + amountEntryDivPart2 + amount + closeDiv +
             closeDiv +
             closeDiv;
 
@@ -81,10 +90,10 @@ function submitFriendExpense() {
 
     let payerUserID = selectedFriendID;
     let currUserID = getCookie("userID")
-    let borrowerID = [currUserID]
+    let borrowerID = [Number(currUserID)]
     if (userPaidCheck === true) {
     payerUserID = currUserID;
-    borrowerID = [selectedFriendID]
+    borrowerID = [Number(selectedFriendID)]
     }
 
     let payloadJson = {
@@ -93,9 +102,8 @@ function submitFriendExpense() {
             category: category,
             amount: parseFloat(amount),
             currency: currency,
-//            owedUserId: payerUserID,
-//            owingUserIds: borrowerID,
-    //        groupId: ""
+            owedUserId: Number(payerUserID),
+            owingUserId: borrowerID
         }
 
         submitExpense(payloadJson);

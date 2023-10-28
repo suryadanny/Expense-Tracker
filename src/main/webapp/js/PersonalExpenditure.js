@@ -54,29 +54,31 @@ function populateUserExpenditure()
 
     for (let i=0; i<expenditure.length; i++)
     {
-        let title = expenditure[i]["title"];
-        let cost = expenditure[i]["amount"];
-        let currency = currencySym[expenditure[i]["currency"]];
-        let date = expenditure[i]["date"];
-        let category = expenditure[i]["category"];
-        let note = expenditure[i]["note"];
-        let newRow =
-            horizontal_bar_open +
-            firstColOpenAndClose +
-            secondColOpen +
-            titleEntryDiv + title + closeDiv +
-            costEntryDiv + currency + cost + closeDiv +
-            dateEntryDiv + date + closeDiv +
-            categoryEntryDiv + category + closeDiv +
-            closeDiv +
-            closeDiv;
+        if(expenditure[i]["owedUserId"] === 0 && expenditure[i]["groupId"] === 0 ) {
+            let title = expenditure[i]["title"];
+            let cost = expenditure[i]["amount"];
+            let currency = currencySym[expenditure[i]["currency"]];
+            let date = expenditure[i]["date"];
+            let category = expenditure[i]["category"];
+            let note = expenditure[i]["note"];
+            let newRow =
+                horizontal_bar_open +
+                firstColOpenAndClose +
+                secondColOpen +
+                titleEntryDiv + title + closeDiv +
+                costEntryDiv + currency + cost + closeDiv +
+                dateEntryDiv + date + closeDiv +
+                categoryEntryDiv + category + closeDiv +
+                closeDiv +
+                closeDiv;
 
-        expenditureContent += newRow;
-        if (!Object.hasOwn(categoryCounter, category))
-        {
-            categoryCounter[category] = 0;
+            expenditureContent += newRow;
+            if (!Object.hasOwn(categoryCounter, category))
+            {
+                categoryCounter[category] = 0;
+            }
+            categoryCounter[category] += 1;
         }
-        categoryCounter[category] += 1;
     }
 
     for (const [key, value] of Object.entries(categoryCounter)) {
