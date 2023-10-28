@@ -130,6 +130,7 @@ public class UserApp {
 			Map<String,String> map = Utility.resolveHeaders(headers.getHeaderString("Authorization"));
 			groupList = groupRepo.getAllGroups(Integer.parseInt(map.get("userId")));
 		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
 			return Response.serverError().entity(ex.getMessage()).build();
 		}
 		return Response.ok(groupList).build();
