@@ -13,6 +13,7 @@ function getAllGroups() {
              "userIdList": [1, 4],
              "groupName": "Movie",
              "amt_owed": 20,
+             "total_grp_spent": 100
          },
 
          {
@@ -23,7 +24,7 @@ function getAllGroups() {
          },
     ]
 
-    let horizontal_bar_open_part1 = "<div class=\"horizontal-bar\" onclick=\"updateGroupExpenseFunc(";
+    let horizontal_bar_open_part1 = "<div class=\"horizontal-bar\" onclick=\"showOpOptions(";
     let horizontal_bar_open_part2 = ")\">";
     let firstColOpenAndClose = "<div class=\"col-5\"></div>";
     let secondColOpen = "<div class=\"col-4\">";
@@ -86,7 +87,7 @@ function populateListOfPotentialPayers(grpUserIdsList) {
     }
 }
 
-function populateListOfPotentialPayees(grpUserIdsList) {
+function populateListOfPotentialPayees(userIdsOfGrpList) {
     let myParent = document.getElementById("listOfPotentialPayersPlaceholder");
     let url = "/app/user/getAllFriends";
     let friendsList = loadJson(url)
@@ -102,12 +103,98 @@ function populateListOfPotentialPayees(grpUserIdsList) {
 
     //Create and append the options
     for (let i = 0; i < friendsList.length; i++) {
-        if (grpUserIdsList.includes(friendsList[i]["id"])){
+        if (userIdsOfGrpList.includes(friendsList[i]["id"])){
             let option = document.createElement("option");
             option.value = friendsList[i]["id"];
             option.text = friendsList[i]["name"];
             selectList.appendChild(option);
         }
+    }
+}
+
+function displayUpdateGroupDetails(groupID) {
+//    let url = "/app/user/getAllFriends";
+//    let friendsList = loadJson(url) // send query to get user expenditure
+//   {
+//     groupID
+//     List<UserId> userIdList
+//      group name
+//   	amt_owed
+//   }
+    groupsList = [
+             {
+                 "groupID": 1,
+                 "userIdList": [1, 4],
+                 "groupName": "Movie",
+                 "amt_owed": 20,
+             },
+
+             {
+                 "groupID": 2,
+                  "userIdList": [1, 6],
+                  "groupName": "Taxi",
+                  "amt_owed": -70,
+             },
+        ]
+
+    let url = "/app/user/getAllFriends";
+    let allFriendsList = loadJson(url);
+
+    let userIdsOfGrpList = [];
+    let groupNameDisplay = "";
+    for (let i=0; i<groupsList.length; i++) {
+        if(groupID === groupsList[i]["groupID"]){
+            userIdsOfGrpList = groupsList[i]["userIdList"];
+            groupNameDisplay = groupsList[i]["groupName"];
+            break;
+        }
+    }
+
+    let remainingUserIDs = [];
+    for (let i=0; i < allFriendsList.length; i++){
+        if(!userIdsOfGrpList.includes(allFriendsList[i]["id"])){
+            remainingUserIDs.push(allFriendsList[i]["id"]);
+        }
+    }
+    document.getElementById('groupIdDisplay1').innerHTML = groupID;
+    document.getElementById('groupNameDisplay').innerHTML = groupNameDisplay;
+    generateFriendListCheckbox("listOfPotentialPayeesPlaceHolder", remainingUserIDs);
+    openTab('updateGroupDetailsForm');
+}
+
+function submitUpdateGroupDetails() {
+    let groupID = document.getElementById('groupIdDisplay1').innerHTML;
+    let grpNewUserIDsList = []
+    let checkedBoxes = document.querySelectorAll('input[name=addGrpExpenseCheckBox]:checked');
+        for (let i=0; i<checkedBoxes.length; i++){
+            grpNewUserIDsList.push(checkedBoxes[i].value);
+        }
+    let payload = {
+            groupID: groupID,
+            userIdList: grpNewUserIDsList
+        }
+        let payloadJson = JSON.stringify(payLoad);
+    //    let url = "/app/user/addFriend?username=" + userName;
+    //
+    //    sendInfo(url, payloadJson, false);
+}
+
+function showOpOptions(groupID) {
+    document.getElementById('groupIdDisplay2').innerHTML = groupID;
+    openTab("showOpOptions");
+}
+
+function groupUpdateOP(operation) {
+    groupID = document.getElementById('groupIdDisplay2').innerHTML;
+    closeTab("showOpOptions");
+    let groupOPList = ["updateGroupDetailsForm", "updateGroupExpenseForm"];
+    closeTab('updateGroupDetailsForm');
+    closeTab('updateGroupExpenseForm');
+    if(operation === "updateGroupDetailsForm") {
+        displayUpdateGroupDetails(groupID);
+    }
+    else {
+        updateGroupExpenseFunc(groupID);
     }
 }
 
@@ -135,16 +222,16 @@ function updateGroupExpenseFunc(groupID) {
                   "amt_owed": -70,
              },
         ]
-    let grpUserIdsList = [];
+    let userIdsOfGrpList = [];
     for (let i=0; i<groupsList.length; i++) {
         if(groupID === groupsList[i]["groupID"]){
-            grpUserIdsList = groupsList[i]["userIdList"];
+            userIdsOfGrpList = groupsList[i]["userIdList"];
             break;
         }
     }
     document.getElementById('groupIdDisplay').innerHTML = groupID;
-    populateListOfPotentialPayers(grpUserIdsList);
-    generateFriendListCheckbox("listOfPotentialPayeesPlaceHolder", grpUserIdsList);
+    populateListOfPotentialPayers(userIdsOfGrpList);
+    generateFriendListCheckbox("listOfPotentialPayeesPlaceHolder", userIdsOfGrpList);
     openTab('updateGroupExpenseForm');
     console.log(groupID);
 
