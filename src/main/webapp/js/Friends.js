@@ -87,6 +87,7 @@ function submitFriendExpense() {
     let category = document.getElementById("category").value;
     let selectedFriendID = document.getElementById("selectedFriend").value;
     let userPaidCheck = document.getElementById("userPaid").checked;
+    let isSplitEqually = document.getElementById("splitEqually").checked;
 
     let payerUserID = selectedFriendID;
     let currUserID = getCookie("userID")
@@ -94,6 +95,10 @@ function submitFriendExpense() {
     if (userPaidCheck === true) {
     payerUserID = currUserID;
     borrowerID = [Number(selectedFriendID)]
+    }
+
+    if (isSplitEqually === true) {
+        borrowerID.push(payerUserID);
     }
 
     let payloadJson = {
@@ -106,7 +111,7 @@ function submitFriendExpense() {
             owingUserId: borrowerID
         }
 
-        submitExpense(payloadJson);
+        submitSplitExpense(payloadJson);
 }
 
 function populateListOfFriends() {

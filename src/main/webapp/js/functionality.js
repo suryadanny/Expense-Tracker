@@ -116,6 +116,19 @@ function submitExpense(payLoad) {
     }
 }
 
+function submitSplitExpense(payLoad) {
+    let url = "/app/expense/postSplitExpense"
+    let payloadJson = JSON.stringify(payLoad);
+    if(getCookie("userAuth"))
+    {
+        sendInfo(url, payloadJson, false);
+    }
+    else
+    {
+        alert("userAuth not set. Invalid login.");
+    }
+}
+
 // let x = loadJson("https://jsonware.com/json/abfe005c41c8214e22e487b8d6eff417.json")
 // console.log(x);
 // populateUserInfo();
