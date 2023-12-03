@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="css/Profile.css">
+    <link rel="stylesheet" href="css/Navbar.css">
+
+</head>
+<body onload="populateUserInfo()">
+<nav class="navbar">
+    <div class="nav-tabs" id="nav-tabs-id">
+        <a href="http://localhost:8085/Expense-Management/PersonalExpenditure.html">Personal</a>
+        <a href="http://localhost:8085/Expense-Management/Friends.html">Friends</a>
+        <a href="http://localhost:8085/Expense-Management/Groups.html">Group</a>
+    </div>
+    <div class="profile-tab">
+        <a href="http://localhost:8085/Expense-Management/Profile.html" id="profile-tab-id">Profile</a>
+        <a href="#" onclick="logout()" id="logout-tab-id">Logout</a>
+        <a href="http://localhost:8085/Expense-Management/Login.html" id="login-tab-id">Login</a>
+    </div>
+</nav>
+
+<div class="profile-container-main">
+    <div class="profile-container">
+        <div class="profile-header">
+            <h2>User Profile</h2>
+        </div>
+        <div class="profile-content">
+            <img src="img/mastercard.png" alt="Profile Picture" class="profile-picture">
+            <div class="profile-details">
+                <p><strong>Username: </strong><span id="userName"></span> </p>
+                <p><strong>Full Name: </strong><span id="fullName"></span></p>
+                <p><strong>Phone Number: </strong><span id="phoneNumber"></span></p>
+                <p><strong>User ID: </strong><span id="userID"></span></p>
+                <p><strong>Email ID: </strong><span id="emailID"></span></p>
+            </div>
+        </div>
+        <div class="change-password">
+            <h3>Change Password</h3>
+            <form action="#" method="POST">
+                <label for="currentPassword">Current Password:</label>
+                <input type="password" id="currentPassword" name="currentPassword" required><br><br>
+
+                <label for="newPassword">New Password:</label>
+                <input type="password" id="newPassword" name="newPassword" required><br><br>
+
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
+
+                <button type="submit" onclick="changePassword()">Change Password</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="js/functionality.js"></script>
+<script src="js/Navbar.js"></script>
+<script src="js/Profile.js"></script>
+</body>
+</html>

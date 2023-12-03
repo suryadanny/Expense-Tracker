@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="css/PersonalExpenditure.css">
+    <link rel="stylesheet" href="css/Container.css">
+    <link rel="stylesheet" href="css/Navbar.css">
+<!--    To generate PIChart-->
+    <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"></script>
+</head>
+<body onload="populateUserExpenditure()">
+
+<nav class="navbar">
+    <div class="nav-tabs" id="nav-tabs-id">
+        <a href="http://localhost:8085/Expense-Management/PersonalExpenditure.html">Personal</a>
+        <a href="http://localhost:8085/Expense-Management/Friends.html">Friends</a>
+        <a href="http://localhost:8085/Expense-Management/Groups.html">Group</a>
+    </div>
+    <div class="profile-tab">
+        <a href="http://localhost:8085/Expense-Management/Profile.html" id="profile-tab-id">Profile</a>
+        <a href="#" onclick="logout()" id="logout-tab-id">Logout</a>
+        <a href="http://localhost:8085/Expense-Management/Login.html" id="login-tab-id">Login</a>
+    </div>
+</nav>
+
+<div id="addExpenseBtn">
+    <button onclick="openTab('addExpenseForm')">Add Expense</button>
+    <div id="addExpenseForm" class="overlay container">
+        <form action="#" method="POST">
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" name="title" required><br><br>
+
+            <label for="amount">Amount:</label><br>
+            <input type="number" id="amount" name="amount" step="0.01" required><br><br>
+
+            <label for="notes">Notes:</label><br>
+            <textarea id="notes" name="notes" rows="5"></textarea><br><br>
+
+            <label for="currency">Currency:</label><br>
+            <select id="currency" name="currency">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+                <!-- Add more currencies as needed -->
+            </select><br><br>
+
+            <label for="paymentMethod">Payment Method:</label><br>
+            <input type="text" id="paymentMethod" name="paymentMethod" required><br><br>
+
+            <label for="category">Category:</label><br>
+            <select id="category" name="category">
+                <option value="Food">Food</option>
+                <option value="Travel">Travel</option>
+                <option value="Entertainment">Entertainment</option>
+                <!-- Add more categories as needed -->
+            </select><br><br>
+
+            <label for="listOfFriends" style="display: none;">Friends:</label><br>
+            <span id="listOfFriends" style="display: none;"></span><br><br>
+
+            <button type="submit" onclick="submitPersonalExpense()">Submit</button>
+            <button type="button" onclick="closeTab('addExpenseForm')">Close</button>
+        </form>
+    </div>
+</div>
+
+
+
+<div class="container" id="expenditureContent">
+<!--    <div class="horizontal-bar">-->
+<!--        <div class="col-5"></div>-->
+<!--        <div class="col-4">-->
+<!--            <div class="bar-title">Title: Grocery Shopping</div>-->
+<!--            <div class="bar-cost">Cost: $50</div>-->
+<!--            <div class="bar-date">Date: 2023-09-27</div>-->
+<!--            <div class="bar-category">Category: Food</div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+</div>
+<div id="pieChart" style="width: 100%; height: 100%"></div>
+<script src="js/functionality.js"></script>
+<script src="js/Navbar.js"></script>
+<script src="js/PersonalExpenditure.js"></script>
+</body>
+</html>
