@@ -24,6 +24,18 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+		<testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+		<outputDirectory>${project.basedir}/target/classes</outputDirectory>
+        <testOutputDirectory>${project.basedir}/target/test-classes</testOutputDirectory>
+        <resources>
+             <resource>
+                 <directory>${project.basedir}/src/main/resources</directory>
+                 <includes>
+                    <include>**/*</include>
+                 </includes>
+             </resource>
+        </resources>
 	</build>
 
 	<dependencyManagement>
@@ -58,6 +70,13 @@
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-binding</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>2.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-common</artifactId>
@@ -94,8 +113,8 @@
 			<artifactId>jakarta.mail</artifactId>
 			<version>2.0.1</version>
 		</dependency>
-<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-webflux -->
-	<!--	<dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-webflux -->
+		<!--	<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 			<version>2.7.0</version>

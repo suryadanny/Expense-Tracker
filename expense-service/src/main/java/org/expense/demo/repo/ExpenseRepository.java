@@ -151,6 +151,38 @@ public class ExpenseRepository {
 			return amtPerGrp;
 		}
 	
+	public Map<Integer,Double> amountOwedByUser(Integer userId){
+		Map<Integer,Double> amtPerUser = new HashMap<Integer,Double>();
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
+					"lingam1998");
+			
+			String amountCalcSql = "select owing_user_id as id, sum(amount) as owed from (\r\n"
+					+ "select  owing_user_id , sum(amount) as amount from expenses where user_id = ? and owing_user_id is not null group by Owing_User_id\r\n"
+					+ "union  \r\n"
+					+ "select  user_id , sum(-amount) as amount from expenses where owing_user_id = ? and owing_user_id is not null group by user_id) agg group by owing_user_id\r\n"
+					+ ""; 
+			
+			PreparedStatement amtCal = conn.prepareStatement(amountCalcSql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+			amtCal.setInt(1, userId);
+			amtCal.setInt(2, userId);
+			ResultSet result = amtCal.executeQuery();
+			
+			while(result.next()) {
+				amtPerUser.put(result.getInt(1), result.getDouble(2));
+				
+			}
+			result.close();
+			amtCal.close();
+			
+		}catch(Exception ex) {
+			System.out.println("Error occurred while calculating per user expense split");
+		}
+		return amtPerUser;
+	}
+	
 
 		public Map<Integer, Double> totalSpendPerGrp(List<Integer> userIds) {
 			Map<Integer, Double> spendPerGrp = new HashMap<Integer, Double>();

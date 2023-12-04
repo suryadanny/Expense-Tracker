@@ -43,7 +43,8 @@ public class Auth extends HttpServlet {
 		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-
+		System.out.println("here user");
+		
 		try {
 			System.out.println("here");
 			User user = userRepo.getUser(username);

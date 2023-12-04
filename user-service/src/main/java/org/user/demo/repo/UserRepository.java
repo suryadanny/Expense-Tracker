@@ -1,5 +1,7 @@
 package org.user.demo.repo;
 
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,6 +14,16 @@ import java.util.Map;
 
 import org.user.demo.model.Contact;
 import org.user.demo.model.User;
+import org.user.demo.utility.Utility;
+import org.yaml.snakeyaml.Yaml;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class UserRepository {
 
@@ -151,11 +163,12 @@ public class UserRepository {
 			stmt.setInt(1,userId);
 			ResultSet result = stmt.executeQuery();
 			int friendUserId =-1;
+			Map<Integer,Double> amountPerUserSplit = amountOwedByUser(userId);
 			while(result.next()) {
 				 friendUserId = result.getInt("conn_user_id");
 				sql = "select * from users where id = ?";
 				
-				Map<Integer,Double> amountPerUserSplit = amountOwedBYUser(userId);
+				
 				PreparedStatement getUser = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_UPDATABLE);
 				//insetToNetwork.setInt(1,userId);
@@ -181,31 +194,31 @@ public class UserRepository {
 	}
 	
 	
-	public Map<Integer,Double> amountOwedBYUser(Integer userId){
+	public Map<Integer,Double> amountOwedByUser(Integer userId){
 		Map<Integer,Double> amtPerUser = new HashMap<Integer,Double>();
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-					"lingam1998");
+			Gson gson = new Gson();
+			InputStream inputStream = GroupRepository.class.getResourceAsStream("/application.yml");
+
+			Yaml yaml = new Yaml();
+			Map<String, Object> data = yaml.load(inputStream);
 			
-			String amountCalcSql = "select owing_user_id as id, sum(amount) as owed from (\r\n"
-					+ "select  owing_user_id , sum(amount) as amount from expenses where user_id = ? and owing_user_id is not null group by Owing_User_id\r\n"
-					+ "union  \r\n"
-					+ "select  user_id , sum(-amount) as amount from expenses where owing_user_id = ? and owing_user_id is not null group by user_id) agg group by owing_user_id\r\n"
-					+ ""; 
+			Request request = new Request.Builder()
+				      .url("http://localhost:"+data.get("expense-service-port")+"/Expense-Service/app/expense" + "/amountOwedByUser")
+				      .addHeader("Authorization", Utility.getBase64Encoded(userId.toString()+":"))
+				      .addHeader("Accept", "*/*")
+				      .addHeader("Content-Type", "application/json")
+				      .build();
+			Type typeMyType = new TypeToken<HashMap<Integer, Double>>() {
+			}.getType();
+			OkHttpClient client = new OkHttpClient();
+				    Call call = client.newCall(request);
+		    Response response = call.execute();
+		    if(response.isSuccessful()) {
+		    	amtPerUser = 	gson.fromJson(response.body().string(), typeMyType);
+		    	System.out.println("users here amtPerUser size : "+amtPerUser.size());
+		    }
 			
-			PreparedStatement amtCal = conn.prepareStatement(amountCalcSql, ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_UPDATABLE);
-			amtCal.setInt(1, userId);
-			amtCal.setInt(2, userId);
-			ResultSet result = amtCal.executeQuery();
-			
-			while(result.next()) {
-				amtPerUser.put(result.getInt(1), result.getDouble(2));
-				
-			}
-			result.close();
-			amtCal.close();
 			
 		}catch(Exception ex) {
 			System.out.println("Error occurred while calculating per user expense split");

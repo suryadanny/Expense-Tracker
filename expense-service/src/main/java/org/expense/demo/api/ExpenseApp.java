@@ -38,6 +38,7 @@ public class ExpenseApp {
     public Response getAll(@Context HttpHeaders headers) {
 		List<Expense> expenses ; 
     	try {
+    	System.out.println("received expense all request");
     	  Map<String,String> map = Utility.resolveHeaders(headers.getHeaderString("Authorization"));
      	 expenses =   expenseRepo.getAllExpenses(Integer.parseInt(map.get("userId")));
      	}catch (Exception ex) {
@@ -103,7 +104,7 @@ public class ExpenseApp {
 				System.out.println("user id  : "+ map.get("userId"));
 				//expense.setOwedUserId(Integer.parseInt(map.get("userId")));
 				amtOwedPerGrp =  expenseRepo.amountOwedPerGrp(Integer.parseInt(map.get("userId")));
-
+				System.out.println("users here amtPerGrp -- exp size : "+amtOwedPerGrp.size());
 			}
     	}catch (Exception ex) {
     		System.out.println("Exception occurred while posting expense :" + ex.getMessage());
@@ -112,6 +113,27 @@ public class ExpenseApp {
     	return Response.ok(amtOwedPerGrp).build();
     }
 	
+    @GET
+    @Path("/amountOwedByUser")
+    @Consumes(MediaType.APPLICATION_JSON)
+	public Response amountOwedByUser(@Context HttpHeaders headers) {
+    	Map<Integer,Double> amtOwedPerUser = new HashMap<Integer,Double>();
+    	try {
+    		Map<String,String> map = Utility.resolveHeaders(headers.getHeaderString("Authorization"));
+    		
+			if (map.containsKey("userId")) {
+				System.out.println("user id  : "+ map.get("userId"));
+				//expense.setOwedUserId(Integer.parseInt(map.get("userId")));
+				amtOwedPerUser =  expenseRepo.amountOwedByUser(Integer.parseInt(map.get("userId")));
+				System.out.println("users here amtPerUser -- exp size : "+amtOwedPerUser.size());
+			}
+    	}catch (Exception ex) {
+    		System.out.println("Exception occurred while posting expense :" + ex.getMessage());
+    		return Response.serverError().entity(ex.getMessage()).build();
+    	}
+    	return Response.ok(amtOwedPerUser).build();
+    }
+    
     @POST
     @Path("/totalSpendPerGrp")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -124,7 +146,7 @@ public class ExpenseApp {
 				System.out.println("user id  : "+ map.get("userId"));
 				//expense.setOwedUserId(Integer.parseInt(map.get("userId")));
 				totalSpendPerGrp =  expenseRepo.totalSpendPerGrp(groupIds.getGroupIds());
-
+				System.out.println("users here amtPerGrp -- exp  size : "+totalSpendPerGrp.size());
 			}
     	}catch (Exception ex) {
     		System.out.println("Exception occurred while posting expense :" + ex.getMessage());

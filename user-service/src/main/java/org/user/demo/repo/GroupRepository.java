@@ -1,5 +1,9 @@
 package org.user.demo.repo;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,9 +16,17 @@ import java.util.Map;
 
 import org.user.demo.model.Contact;
 import org.user.demo.model.Group;
+import org.user.demo.model.GroupId;
 import org.user.demo.utility.Utility;
+import org.yaml.snakeyaml.Yaml;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import okhttp3.Call;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -78,7 +90,7 @@ public class GroupRepository {
 			int groupId =-1;
 			
 			Map<Integer,Double> amountPerUserSplit = amountOwedPerGrp(userId);
-			Map<Integer,Double> spendPerGrp = totalSpendPerGrp(userId);
+			Map<Integer,Double> spendPerGrp = totalSpendPerGrp(getGroupIdsForUser(userId),userId);
 			while(result.next()) {
 				
 				 groupId = result.getInt("group_id");
@@ -140,42 +152,28 @@ public class GroupRepository {
 	public Map<Integer,Double> amountOwedPerGrp(Integer userId){
 			Map<Integer,Double> amtPerGrp = new HashMap<Integer,Double>();
 			try {
-				
+				Gson gson = new Gson();
+				InputStream inputStream = GroupRepository.class.getResourceAsStream("/application.yml");
+
+				Yaml yaml = new Yaml();
+				Map<String, Object> data = yaml.load(inputStream);
 				
 				Request request = new Request.Builder()
-					      .url("http://localhost:8080/Expense-Sevice/app" + "/amountOwedPerGrp")
+					      .url("http://localhost:"+data.get("expense-service-port")+"/Expense-Service/app/expense" + "/amountOwedPerGrp")
 					      .addHeader("Authorization", Utility.getBase64Encoded(userId.toString()+":"))
 					      .addHeader("Accept", "*/*")
 					      .addHeader("Content-Type", "application/json")
 					      .build();
+				Type typeMyType = new TypeToken<HashMap<Integer, Double>>() {
+				}.getType();
 				OkHttpClient client = new OkHttpClient();
 					    Call call = client.newCall(request);
 			    Response response = call.execute();
 			    if(response.isSuccessful()) {
-			    	response.body().string();
+			    	amtPerGrp = 	gson.fromJson(response.body().string(), typeMyType);
+			    	System.out.println("users here amtPerGrp size : "+amtPerGrp.size());
 			    }
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-						"lingam1998");
 				
-				String amountCalcSql = "select group_id as group_id, sum(amount) as owed from (\r\n"
-						+ "select  group_id , sum(amount) as amount from expenses where user_id = ? and group_id is not null group by group_id\r\n"
-						+ "union  \r\n"
-						+ "select  group_id , sum(-amount) as amount from expenses where owing_user_id = ? and group_id is not null group by group_id) agg group by group_id\r\n"
-						+ ""; 
-				
-				PreparedStatement amtCal = conn.prepareStatement(amountCalcSql, ResultSet.TYPE_SCROLL_INSENSITIVE,
-						ResultSet.CONCUR_UPDATABLE);
-				amtCal.setInt(1, userId);
-				amtCal.setInt(2, userId);
-				ResultSet result = amtCal.executeQuery();
-				
-				while(result.next()) {
-					amtPerGrp.put(result.getInt(1), result.getDouble(2));
-					
-				}
-				result.close();
-				amtCal.close();
 				
 			}catch(Exception ex) {
 				System.out.println("Error occurred while calculating per user expense split");
@@ -184,29 +182,43 @@ public class GroupRepository {
 		}
 	
 
-		public Map<Integer, Double> totalSpendPerGrp(Integer userId) {
+		@SuppressWarnings("deprecation")
+		public Map<Integer, Double> totalSpendPerGrp(List<Integer> groupIds, Integer userId) {
 			Map<Integer, Double> spendPerGrp = new HashMap<Integer, Double>();
 			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-						"lingam1998");
+				//System.out.println(environment.get("spring.application.name"));
+				InputStream inputStream = GroupRepository.class.getResourceAsStream("/application.yml");
 
-				String amountCalcSql = "select group_id , sum(amount) from expenses where group_id in (select group_id from split_group where user_id = ?) group by group_id";
-
-				PreparedStatement amtCal = conn.prepareStatement(amountCalcSql, ResultSet.TYPE_SCROLL_INSENSITIVE,
-						ResultSet.CONCUR_UPDATABLE);
-				amtCal.setInt(1, userId);
-				ResultSet result = amtCal.executeQuery();
-
-				while (result.next()) {
-					spendPerGrp.put(result.getInt(1), result.getDouble(2));
-
-				}
-				result.close();
-				amtCal.close();
-
+				Yaml yaml = new Yaml();
+				Map<String, Object> data = yaml.load(inputStream);
+				
+				System.out.println("expense port : "+data.get("expense-service-port"));
+				Gson gson = new Gson();
+				GroupId groupIdList = new GroupId();
+				groupIdList.setGroupIds(groupIds);
+				RequestBody body = RequestBody.create(
+					      MediaType.parse("application/json"), gson.toJson(groupIdList));
+				
+				Request request = new Request.Builder()
+					      .url("http://localhost:"+data.get("expense-service-port")+"/Expense-Service/app/expense" + "/totalSpendPerGrp")
+					      .addHeader("Authorization", Utility.getBase64Encoded(userId.toString()+":"))
+					      .addHeader("Accept", "*/*")
+					      .addHeader("Content-Type", "application/json")
+					      .post(body)
+					      .build();
+				Type typeMyType = new TypeToken<HashMap<Integer, Double>>() {
+				}.getType();
+				OkHttpClient client = new OkHttpClient();
+			    Call call = client.newCall(request);
+			    Response response = call.execute();
+			    if(response.isSuccessful()) {
+			    	spendPerGrp = 	gson.fromJson(response.body().string(), typeMyType);
+			        System.out.println("users here totalSpendPerGrp size : "+spendPerGrp.size());
+			    }
+				
+				
 			} catch (Exception ex) {
-				System.out.println("Error occurred while calculating per user expense split");
+				System.out.println("Error occurred while calculating per user expense split"+ ex.getMessage());
 			}
 			return spendPerGrp;
 		}

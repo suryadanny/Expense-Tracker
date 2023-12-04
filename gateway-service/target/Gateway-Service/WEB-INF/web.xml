@@ -6,7 +6,7 @@
     <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
     <init-param>
       <param-name>jersey.config.server.provider.packages</param-name>
-      <param-value>org.expense.demo.api</param-value>
+      <param-value>org.gateway.demo.api</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -17,7 +17,7 @@
   <servlet>
     <display-name>Auth</display-name>
     <servlet-name>Auth</servlet-name>
-    <servlet-class>org.expense.demo.api.Auth</servlet-class>
+    <servlet-class>org.gateway.demo.api.Auth</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Auth</servlet-name>
