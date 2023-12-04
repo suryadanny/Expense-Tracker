@@ -1,4 +1,4 @@
-var baseURL = "http://localhost:8085/Expense-Management";
+var baseURL = "http://localhost:8085/Gateway-Service";
 
 function getCookie(cname) {
     let name = cname + "=";
@@ -92,7 +92,7 @@ function logout()
     deleteCookie("userId");
     deleteCookie("password");
     // navBarDisplay();
-    window.location.replace("http://localhost:8085/Expense-Management/Login.html");
+    window.location.replace("http://localhost:8085/Gateway-Service/Login.html");
 }
 
 function openTab(elemetID) {

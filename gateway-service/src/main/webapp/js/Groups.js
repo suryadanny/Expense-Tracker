@@ -1,5 +1,5 @@
 function getAllGroups() {
-    let url = "/app/user/group/all";
+    let url = "/app/gateway/group/all";
     let groupsList = loadJson(url); // send query to get user expenditure
 //   {
 //     groupID
@@ -67,7 +67,7 @@ function getAllGroups() {
 
 function populateListOfPotentialPayers(grpUserIdsList) {
     let myParent = document.getElementById("listOfPotentialPayersPlaceholder");
-    let url = "/app/user/getAllFriends";
+    let url = "/app/gateway/getAllFriends";
     let friendsList = loadJson(url)
     let selectList = document.createElement("select");
     selectList.id = "selectedPayer";
@@ -92,7 +92,7 @@ function populateListOfPotentialPayers(grpUserIdsList) {
 
 function populateListOfPotentialPayees(userIdsOfGrpList) {
     let myParent = document.getElementById("listOfPotentialPayersPlaceholder");
-    let url = "/app/user/getAllFriends";
+    let url = "/app/gateway/getAllFriends";
     let friendsList = loadJson(url)
     let selectList = document.createElement("select");
     selectList.id = "selectedPayer";
@@ -124,7 +124,7 @@ function displayUpdateGroupDetails(groupID) {
 //      group name
 //   	amt_owed
 //   }
-    let urlGrp = "/app/user/group/all";
+    let urlGrp = "/app/gateway/group/all";
     let groupsList = loadJson(urlGrp)
 //    groupsList = [
 //             {
@@ -142,7 +142,7 @@ function displayUpdateGroupDetails(groupID) {
 //             },
 //        ]
 
-    let url = "/app/user/getAllFriends";
+    let url = "/app/gateway/getAllFriends";
     let allFriendsList = loadJson(url);
     groupID = Number(groupID)
 
@@ -182,7 +182,7 @@ function submitUpdateGroupDetails() {
             groupName: groupName
         }
         let payloadJson = JSON.stringify(payLoad);
-        let url = "/app/user/addFriend?username=" + userName;
+        let url = "/app/gateway/addFriend?username=" + userName;
 
         sendInfo(url, payloadJson, false);
 }
@@ -215,7 +215,7 @@ function updateGroupExpenseFunc(groupID) {
 //      group name
 //   	amt_owed
 //   }
-    let url = "/app/user/group/all";
+    let url = "/app/gateway/group/all";
     let groupsList = loadJson(url);
 //    groupsList = [
 //             {
@@ -291,14 +291,14 @@ function submitNewGroup()
         userIdList: usersIDs
     }
     let payloadJson = JSON.stringify(payload);
-    let url = "/app/user/group/create";
+    let url = "/app/gateway/group/create";
 
     sendInfo(url, payloadJson, false);
 }
 
 function generateFriendListCheckbox(parentEleID, listOfFriendIDsInGroup) {
     let myParent = document.getElementById(parentEleID);
-    let url = "/app/user/getAllFriends";
+    let url = "/app/gateway/getAllFriends";
     let allFriendsList = loadJson(url);
 
     let checkboxName = "newUserCheckbox";

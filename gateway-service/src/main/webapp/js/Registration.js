@@ -16,7 +16,7 @@ function register()
     }
 
     let payload = JSON.stringify(payloadJson);
-    let url = "/app/user/register"
+    let url = "/app/gateway/register"
 
     let response = sendInfo(url, payload, true);
 

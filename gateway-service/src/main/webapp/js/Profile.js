@@ -1,6 +1,6 @@
 function populateUserInfo()
 {
-    let url = "/app/user/userProfile";
+    let url = "/app/gateway/userProfile";
     let x = loadJson(url); // send query to get user info
 
     // Giving it dummy values for now
