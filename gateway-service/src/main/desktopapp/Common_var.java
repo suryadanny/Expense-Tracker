@@ -10,14 +10,14 @@ public class Common_var {
 
     public static int userID = -1;
     public static String password = "";
-    public static String URLBase = "http://localhost:8085/Expense-Management";
-    public static String getAllFriendsURL = "/app/user/getAllFriends";
-    public static String postExpenseURL = "/app/expense/postExpense";
-    public static String getExpenseAll = "/app/expense/all";
-    public static String addFriendURL = "/app/user/addFriend?username=";
-    public static String getAllGroupsURL = "/app/user/group/all";
-    public static String createGroupURL = "/app/user/group/create";
-    public static String updateGroupExpenseURL = "/app/expense/postSplitExpense";
+    public static String URLBase = "http://localhost:8080/Gateway-Service";
+    public static String getAllFriendsURL = "/app/gateway/getAllFriends";
+    public static String postExpenseURL = "/app/gateway/postExpense";
+    public static String getExpenseAll = "/app/gateway/expense/all";
+    public static String addFriendURL = "/app/gateway/addFriend?username=";
+    public static String getAllGroupsURL = "/app/gateway/group/all";
+    public static String createGroupURL = "/app/gateway/group/create";
+    public static String updateGroupExpenseURL = "/app/gateway/postSplitExpense";
 
     public static int getUserID()
     {
