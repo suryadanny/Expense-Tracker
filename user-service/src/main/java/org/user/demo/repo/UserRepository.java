@@ -26,12 +26,16 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class UserRepository {
+	
+	private String connString = "jdbc:mysql://ug1iaxxhozdrtr3n:IG8KKZrv343C05y32aWw@bixa0j57zr2btgekt46m-mysql.services.clever-cloud.com:3306/bixa0j57zr2btgekt46m";
+    private String dbusername = "ug1iaxxhozdrtr3n";
+    private String dbpassword = "IG8KKZrv343C05y32aWw";
+    
 
 	public void Register(User user) throws Exception{
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "root",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection(connString, dbusername, dbpassword);
 			String sql = "insert into users (username, name , email ,mobile ,password) values(?,?,?,?,?)";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
@@ -56,8 +60,7 @@ public class UserRepository {
 		User user = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "root",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection(connString, dbusername, dbpassword);
 			String sql = "select * from users where username = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
@@ -88,8 +91,7 @@ public class UserRepository {
 		User user = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "root",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection(connString, dbusername, dbpassword);
 			String sql = "select * from users where id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
@@ -120,8 +122,7 @@ public class UserRepository {
 	public void addFriend(Integer userId , String friendUsername)throws Exception {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "root",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection(connString, dbusername, dbpassword);
 			String sql = "select * from users where username = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
@@ -155,8 +156,7 @@ public class UserRepository {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "root",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection(connString, dbusername, dbpassword);
 			String sql = "select * from network where user_id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);

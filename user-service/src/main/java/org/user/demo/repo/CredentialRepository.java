@@ -7,12 +7,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CredentialRepository {
+	
+	private String connString = "jdbc:mysql://ug1iaxxhozdrtr3n:IG8KKZrv343C05y32aWw@bixa0j57zr2btgekt46m-mysql.services.clever-cloud.com:3306/bixa0j57zr2btgekt46m";
+    private String dbusername = "ug1iaxxhozdrtr3n";
+    private String dbpassword = "IG8KKZrv343C05y32aWw";
+    
      
 	public void insertOTP(Integer userId, String OTP) throws Exception {
+		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection(connString, dbusername, dbpassword);
 
 			String sql = "select * from credential where user_id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,

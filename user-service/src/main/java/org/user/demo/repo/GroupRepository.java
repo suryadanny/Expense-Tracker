@@ -34,10 +34,14 @@ import okhttp3.Response;
 public class GroupRepository {
 	
 	
+	private String connString = "jdbc:mysql://ug1iaxxhozdrtr3n:IG8KKZrv343C05y32aWw@bixa0j57zr2btgekt46m-mysql.services.clever-cloud.com:3306/bixa0j57zr2btgekt46m";
+    private String dbusername = "ug1iaxxhozdrtr3n";
+    private String dbpassword = "IG8KKZrv343C05y32aWw";
+    
+	
 	public void createGroup(Group group) throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-				"lingam1998");
+		Connection conn = DriverManager.getConnection(connString, dbusername, dbpassword);
 		conn.setAutoCommit(false);
 		try {
 			
@@ -80,8 +84,7 @@ public class GroupRepository {
 		List<Group> groupList = new ArrayList<Group>();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "root",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection(connString, dbusername, dbpassword);
 			String sql = "select *  from split_group where group_id in ( select group_id from split_group where user_id = ?)";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
@@ -126,8 +129,7 @@ public class GroupRepository {
 		List<Integer> groupIds = new ArrayList<Integer>();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection(connString, dbusername, dbpassword);
 
 			String groupIdForUser = "select group_id from split_group where user_id = ?";
 

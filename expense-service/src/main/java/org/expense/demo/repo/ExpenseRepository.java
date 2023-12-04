@@ -13,11 +13,16 @@ import java.util.Map;
 import org.expense.demo.model.Expense;
 
 public class ExpenseRepository {
-
+	
+	private String connString = "jdbc:mysql://ur5fl2svbbzbricp:0ZJXBiEmRisZ91pb0dEp@b73dmnzj3cvrvogychp5-mysql.services.clever-cloud.com:3306/b73dmnzj3cvrvogychp5";
+    private String dbusername = "ur5fl2svbbzbricp";
+    private String dbpassword = "0ZJXBiEmRisZ91pb0dEp";
+    
+    
 	public void addExpense(Expense expense) throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-				"lingam1998");
+		Connection conn = DriverManager.getConnection(connString,dbusername,
+				dbpassword);
 		conn.setAutoCommit(false);
 		try
 		{
@@ -78,8 +83,8 @@ public class ExpenseRepository {
 		List<Expense> expenses = new ArrayList<Expense>();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection(connString, dbusername,
+					dbpassword);
 			String sql = "select * from expenses where user_id = ? ";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
@@ -123,8 +128,8 @@ public class ExpenseRepository {
 			Map<Integer,Double> amtPerGrp = new HashMap<Integer,Double>();
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-						"lingam1998");
+				Connection conn = DriverManager.getConnection(connString, dbusername,
+						dbpassword);
 				
 				String amountCalcSql = "select group_id as group_id, sum(amount) as owed from (\r\n"
 						+ "select  group_id , sum(amount) as amount from expenses where user_id = ? and group_id is not null group by group_id\r\n"
@@ -155,8 +160,8 @@ public class ExpenseRepository {
 		Map<Integer,Double> amtPerUser = new HashMap<Integer,Double>();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-					"lingam1998");
+			Connection conn = DriverManager.getConnection(connString, dbusername,
+					dbpassword);
 			
 			String amountCalcSql = "select owing_user_id as id, sum(amount) as owed from (\r\n"
 					+ "select  owing_user_id , sum(amount) as amount from expenses where user_id = ? and owing_user_id is not null group by Owing_User_id\r\n"
@@ -188,8 +193,8 @@ public class ExpenseRepository {
 			Map<Integer, Double> spendPerGrp = new HashMap<Integer, Double>();
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/expense_tracker", "surya",
-						"lingam1998");
+				Connection conn = DriverManager.getConnection(connString, dbusername,
+						dbpassword);
 
 				String amountCalcSql = "select group_id , sum(amount) from expenses where group_id in (";
 				for(int i = 0; i< userIds.size()-1;i++) {
