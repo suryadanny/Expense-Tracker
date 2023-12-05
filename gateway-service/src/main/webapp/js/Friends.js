@@ -45,7 +45,7 @@ function getAllFriends() {
 
         allFriendsDetails += newRow;
     }
-
+    console.log(friendsList)
     document.getElementById("friendsContent").innerHTML = allFriendsDetails;
 }
 

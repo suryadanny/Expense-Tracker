@@ -16,7 +16,7 @@ function register()
     }
 
     let payload = JSON.stringify(payloadJson);
-    let url = "/app/user/register"
+    let url = "/app/gateway/register"
 
     let response = sendInfo(url, payload, true);
 
@@ -24,7 +24,7 @@ function register()
     if(response.responseText === "USER CREATED")
     {
         alert("Registration successful");
-        window.location.replace("http://localhost:8085/Expense-Management/Login.html");
+        window.location.replace("http://localhost:8080/Gateway-Service/Login.html");
     }
     else
         alert("Registration unsuccessful");

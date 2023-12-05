@@ -38,6 +38,7 @@ public class GroupRepository {
     private String dbusername = "ug1iaxxhozdrtr3n";
     private String dbpassword = "IG8KKZrv343C05y32aWw";
     
+   
 	
 	public void createGroup(Group group) throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver");
@@ -71,11 +72,13 @@ public class GroupRepository {
 				 stmt.close();
 				 insertToNetwork.close();
 			}
+			//conn.close();
 		}catch (SQLException e) {
 			System.out.println("Exception occurred while getting user :" + e.getMessage());
 			conn.rollback();
 			throw e;
 		}
+		conn.close();
 	}
 	
 	
@@ -112,6 +115,8 @@ public class GroupRepository {
 				 }
 				
 			}
+			result.close();
+			conn.close();
 		}catch (SQLException e) {
 			System.out.println("Exception occurred while getting user :" + e.getMessage());
 			throw e;
@@ -144,7 +149,7 @@ public class GroupRepository {
 			}
 			result.close();
 			groupIdQuery.close();
-
+           conn.close();
 		} catch (Exception ex) {
 			System.out.println("Error occurred while calculating per user expense split");
 		}

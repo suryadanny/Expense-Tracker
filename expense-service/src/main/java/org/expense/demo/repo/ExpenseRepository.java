@@ -18,7 +18,7 @@ public class ExpenseRepository {
     private String dbusername = "ur5fl2svbbzbricp";
     private String dbpassword = "0ZJXBiEmRisZ91pb0dEp";
     
-    
+	    
 	public void addExpense(Expense expense) throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(connString,dbusername,
@@ -65,6 +65,7 @@ public class ExpenseRepository {
 			stmt.executeUpdate();
 		}
           conn.commit();
+         conn.close();
 
 		}
 		catch(SQLException e)
@@ -108,6 +109,7 @@ public class ExpenseRepository {
                 expense.setGroupId(result.getInt("group_id"));
                 expenses.add(expense);
 			}
+			conn.close();
 		} catch(SQLException e)
 		{
 			System.out.println("Exception occurred while storing expense :" + e.getMessage());
@@ -149,7 +151,7 @@ public class ExpenseRepository {
 				}
 				result.close();
 				amtCal.close();
-				
+				conn.close();
 			}catch(Exception ex) {
 				System.out.println("Error occurred while calculating per user expense split");
 			}
@@ -181,6 +183,7 @@ public class ExpenseRepository {
 			}
 			result.close();
 			amtCal.close();
+			conn.close();
 			
 		}catch(Exception ex) {
 			System.out.println("Error occurred while calculating per user expense split");
@@ -216,7 +219,7 @@ public class ExpenseRepository {
 				}
 				result.close();
 				amtCal.close();
-
+				conn.close();
 			} catch (Exception ex) {
 				System.out.println("Error occurred while calculating per user expense split");
 			}

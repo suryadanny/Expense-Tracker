@@ -11,7 +11,8 @@ public class CredentialRepository {
 	private String connString = "jdbc:mysql://ug1iaxxhozdrtr3n:IG8KKZrv343C05y32aWw@bixa0j57zr2btgekt46m-mysql.services.clever-cloud.com:3306/bixa0j57zr2btgekt46m";
     private String dbusername = "ug1iaxxhozdrtr3n";
     private String dbpassword = "IG8KKZrv343C05y32aWw";
-    
+
+	
      
 	public void insertOTP(Integer userId, String OTP) throws Exception {
 		
@@ -41,7 +42,7 @@ public class CredentialRepository {
 				stmt.executeUpdate();
 				stmt.close();
 			}
-		    
+		  conn.close();
 		} catch (SQLException e) {
 			System.out.println("Exception occurred while storing expense :" + e.getMessage());
 			throw e;

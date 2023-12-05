@@ -36,7 +36,7 @@ public class CredentialRepository {
 				stmt.executeUpdate();
 				stmt.close();
 			}
-		    
+		    conn.close();
 		} catch (SQLException e) {
 			System.out.println("Exception occurred while storing expense :" + e.getMessage());
 			throw e;

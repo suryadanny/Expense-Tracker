@@ -24,7 +24,7 @@ function register()
     if(response.responseText === "USER CREATED")
     {
         alert("Registration successful");
-        window.location.replace("http://localhost:8085/Expense-Management/Login.html");
+        window.location.replace("http://localhost:8080/Gateway-Service/Login.html");
     }
     else
         alert("Registration unsuccessful");

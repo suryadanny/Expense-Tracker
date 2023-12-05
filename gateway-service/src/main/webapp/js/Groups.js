@@ -181,8 +181,8 @@ function submitUpdateGroupDetails() {
             userIdList: grpNewUserIDsList,
             groupName: groupName
         }
-        let payloadJson = JSON.stringify(payLoad);
-        let url = "/app/gateway/addFriend?username=" + userName;
+        let payloadJson = JSON.stringify(payload);
+        let url = "/app/gateway/group/create";
 
         sendInfo(url, payloadJson, false);
 }

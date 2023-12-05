@@ -1,4 +1,4 @@
-var baseURL = "http://localhost:8085/Gateway-Service";
+var baseURL = "http://localhost:8080/Gateway-Service";
 
 function getCookie(cname) {
     let name = cname + "=";
@@ -49,6 +49,15 @@ function loadJson(url)
     // callback(jsonInfo);
 
     xhttp.send();
+   //for (let i = 0; i < 100000; i++){
+	//   console.log(i);	
+//	}
+  //  while(xhttp.readyState  != 4){
+//		console.log('text over here=',xhttp.responseText);
+//	}
+  //  setTimeout(() => console.log('response=',xhttp.responseText), 2000);
+  //  await new Promise(r => setTimeout(r, 2000));
+    console.log("waiting");
     jsonInfo = JSON.parse(xhttp.responseText);
     console.log(jsonInfo);
     return jsonInfo;
@@ -92,7 +101,7 @@ function logout()
     deleteCookie("userId");
     deleteCookie("password");
     // navBarDisplay();
-    window.location.replace("http://localhost:8085/Gateway-Service/Login.html");
+    window.location.replace("http://localhost:8080/Gateway-Service/Login.html");
 }
 
 function openTab(elemetID) {
@@ -104,7 +113,7 @@ function closeTab(elemetID) {
 }
 
 function submitExpense(payLoad) {
-    let url = "/app/expense/postExpense"
+    let url = "/app/gateway/postExpense"
     let payloadJson = JSON.stringify(payLoad);
     if(getCookie("userAuth"))
     {
@@ -117,7 +126,7 @@ function submitExpense(payLoad) {
 }
 
 function submitSplitExpense(payLoad) {
-    let url = "/app/expense/postSplitExpense"
+    let url = "/app/gateway/postSplitExpense"
     let payloadJson = JSON.stringify(payLoad);
     if(getCookie("userAuth"))
     {

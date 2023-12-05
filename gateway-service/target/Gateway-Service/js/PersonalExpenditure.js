@@ -1,6 +1,6 @@
 function populateUserExpenditure()
 {
-    let url = "/app/expense/all";
+    let url = "/app/gateway/expense/all";
     let expenditure = loadJson(url) // send query to get user expenditure
 
     // Giving it dummy values for now

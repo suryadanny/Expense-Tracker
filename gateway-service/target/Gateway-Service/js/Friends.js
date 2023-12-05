@@ -1,5 +1,5 @@
 function getAllFriends() {
-    let url = "/app/user/getAllFriends";
+    let url = "/app/gateway/getAllFriends";
     let friendsList = loadJson(url) // send query to get user expenditure
 
     let horizontal_bar_open = "<div class=\"horizontal-bar\">";
@@ -45,7 +45,7 @@ function getAllFriends() {
 
         allFriendsDetails += newRow;
     }
-
+    console.log(friendsList)
     document.getElementById("friendsContent").innerHTML = allFriendsDetails;
 }
 
@@ -73,7 +73,7 @@ function submitFriendConnection()
 {
     let userName = document.getElementById("userName").value;
 
-    let url = "/app/user/addFriend?username=" + userName;
+    let url = "/app/gateway/addFriend?username=" + userName;
 
     sendInfo(url, null, false);
 }
@@ -116,7 +116,7 @@ function submitFriendExpense() {
 
 function populateListOfFriends() {
     var myParent = document.getElementById("listOfFriendsPlaceholder");
-    let url = "/app/user/getAllFriends";
+    let url = "/app/gateway/getAllFriends";
     let friendsList = loadJson(url)
     var selectList = document.createElement("select");
     selectList.id = "selectedFriend";

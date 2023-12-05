@@ -30,7 +30,8 @@ public class UserRepository {
 	private String connString = "jdbc:mysql://ug1iaxxhozdrtr3n:IG8KKZrv343C05y32aWw@bixa0j57zr2btgekt46m-mysql.services.clever-cloud.com:3306/bixa0j57zr2btgekt46m";
     private String dbusername = "ug1iaxxhozdrtr3n";
     private String dbpassword = "IG8KKZrv343C05y32aWw";
-    
+
+
 
 	public void Register(User user) throws Exception{
 		try {
@@ -46,7 +47,7 @@ public class UserRepository {
 			stmt.setString(5, user.getPassword());
 			stmt.executeUpdate();
 		    stmt.close();
-		    
+		    conn.close();
 		} catch (SQLException e) {
 			System.out.println("Exception occurred while storing expense :" + e.getMessage());
 			throw e;
@@ -60,7 +61,7 @@ public class UserRepository {
 		User user = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(connString, dbusername, dbpassword);
+		    Connection conn = DriverManager.getConnection(connString, dbusername, dbpassword);
 			String sql = "select * from users where username = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
@@ -75,7 +76,7 @@ public class UserRepository {
 				user.setMobile(result.getString("mobile"));
 			}
 		    stmt.close();
-		    
+		    conn.close();
 		} catch (SQLException e) {
 			System.out.println("Exception occurred while getting user :" + e.getMessage());
 			throw e;
@@ -107,7 +108,7 @@ public class UserRepository {
 				user.setName(result.getString("name"));
 			}
 			stmt.close();
-
+			conn.close();
 		} catch (SQLException e) {
 			System.out.println("Exception occurred while getting user :" + e.getMessage());
 			throw e;
@@ -139,8 +140,10 @@ public class UserRepository {
 				 stmt.close();
 				 insertToNetwork.close();
 			}else {
+				conn.close();
 				throw new Exception("Contact is not found");
 			}
+			conn.close();
 		}catch (SQLException e) {
 			System.out.println("Exception occurred while getting user :" + e.getMessage());
 			throw e;
@@ -183,6 +186,7 @@ public class UserRepository {
 					
 				}
 			}
+			conn.close();
 		}catch (SQLException e) {
 			System.out.println("Exception occurred while getting user :" + e.getMessage());
 			throw e;

@@ -10,7 +10,7 @@ CREATE TABLE USERS (
 CREATE TABLE credential (
     user_id INT PRIMARY KEY,
     OTP VARCHAR(6),
-	constraint fk_credential_1 foreign key(user_id) references USER(id)
+	constraint fk_credential_1 foreign key(user_id) references USERS(id)
 );
 
 CREATE TABLE Expenses (
@@ -34,8 +34,8 @@ CREATE TABLE Network (
     user_id INT NOT NULL,
     conn_user_id INT NOT NULL,
     PRIMARY KEY (user_id, conn_user_id),
-    FOREIGN KEY (user_id) REFERENCES User(id),
-    FOREIGN KEY (conn_user_id) REFERENCES User(id)
+    FOREIGN KEY (user_id) REFERENCES USERS(id),
+    FOREIGN KEY (conn_user_id) REFERENCES USERS(id)
 );
 
 CREATE TABLE SPLIT_GROUP (
@@ -43,5 +43,5 @@ CREATE TABLE SPLIT_GROUP (
 	group_name varchar(255) NOT NULL,
     user_id INT NOT NULL,
     PRIMARY KEY (group_id, user_id),
-    FOREIGN KEY (user_id) REFERENCES User(id)
+    FOREIGN KEY (user_id) REFERENCES USERS(id)
 );
